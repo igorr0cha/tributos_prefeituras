@@ -12,9 +12,9 @@ Abaixo está a lista de prefeituras que já possuem automação. Clique no link 
 
 | Prefeitura | Link para o Portal | Nome do Arquivo/BOT | Observações |
 | :--- | :--- | :--- | :--- |
-| 🏙️ **Nome da Cidade (UF)** | [Acessar Portal](http://link-da-prefeitura.gov.br) | `nome_do_bot_cidade.py` | Ex: Necessário certificado digital A1. |
-| 🏙️ **Nome da Cidade (UF)** | [Acessar Portal](http://link-da-prefeitura.gov.br) | `nome_do_bot_cidade.py` | Ex: Login via usuário e senha. |
-| 🏙️ **Nome da Cidade (UF)** | [Acessar Portal](http://link-da-prefeitura.gov.br) | `nome_do_bot_cidade.py` | Ex: Apresenta instabilidade em alguns horários. |
+| 🏙️ **São Paulo (SP)** | [Acessar Portal](https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/) | `sao_paulo.py` |  |
+| 🏙️ **Goiânia (GO)** | [Acessar Portal](https://itbi.goiania.go.gov.br/sistemas/saces/asp/saces00000f0.asp?sigla=sisti) | `goiania.py` |  |
+| 🏙️ **João Pessoa (PB)** | [Acessar Portal](https://receita.joaopessoa.pb.gov.br/itbi/paginas/portal/login.html) | `joao_pessoa.py` | Ex: Necessita de Login. |
 | *(Adicione mais linhas conforme necessário)* | | | |
 
 ---
@@ -69,4 +69,4 @@ Contribuições são bem-vindas! Se você deseja adicionar um novo BOT para uma 
 
 ## 📄 Licença
 
-Este projeto está sob a licença [MIT](link-para-sua-licenca).
+Este projeto está sob a licença [MIT - colocar licença documentall](link-para-sua-licenca).
