@@ -8,14 +8,14 @@ Este projeto consiste em uma coleção de BOTs desenvolvidos para automatizar o 
 
 ## 🏛️ Prefeituras Atendidas
 
-Abaixo está a lista de prefeituras que já possuem automação. Clique no link para acessar o portal correspondente.
+Abaixo está a lista das prefeituras que já possuem automação/estão em desenvolvimento. Clique no link para acessar o portal correspondente.
 
-| Prefeitura | Link para o Portal | Nome do Arquivo/BOT | Observações |
-| :--- | :--- | :--- | :--- |
-| 🏙️ **São Paulo (SP)** | [Acessar Portal](https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/) | `sao_paulo.py` |  |
-| 🏙️ **Goiânia (GO)** | [Acessar Portal](https://itbi.goiania.go.gov.br/sistemas/saces/asp/saces00000f0.asp?sigla=sisti) | `goiania.py` |  |
-| 🏙️ **João Pessoa (PB)** | [Acessar Portal](https://receita.joaopessoa.pb.gov.br/itbi/paginas/portal/login.html) | `joao_pessoa.py` | Ex: Necessita de Login. |
-| *(Adicione mais linhas conforme necessário)* | | | |
+| Prefeitura | Link para o Portal | Nome do Arquivo/BOT | Observações | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| 🏙️ **São Paulo (SP)** | [Acessar Portal](https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/) | `sao_paulo.py` |  | _em desenvolvimento_ |
+| 🏙️ **Goiânia (GO)** | [Acessar Portal](https://itbi.goiania.go.gov.br/sistemas/saces/asp/saces00000f0.asp?sigla=sisti) | `goiania.py` |  | _em desenvolvimento_ |
+| 🏙️ **João Pessoa (PB)** | [Acessar Portal](https://receita.joaopessoa.pb.gov.br/itbi/paginas/portal/login.html) | `joao_pessoa.py` | Ex: Necessita de Login. Uma vez emitido a guia, consta-se na dívida ativa - *ATENÇÃO* | _em desenvolvimento_ |
+| *(Adicione mais linhas conforme necessário)* | | | | |
 
 ---
 
