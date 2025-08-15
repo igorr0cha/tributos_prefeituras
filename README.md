@@ -15,7 +15,7 @@ Abaixo está a lista das prefeituras que já possuem automação/estão em desen
 | 🏙️ **São Paulo (SP)** | [Acessar Portal](https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/) | `sao_paulo.py` |  | _em desenvolvimento_ |
 | 🏙️ **Goiânia (GO)** | [Acessar Portal](https://itbi.goiania.go.gov.br/sistemas/saces/asp/saces00000f0.asp?sigla=sisti) | `goiania.py` |  | _em desenvolvimento_ |
 | 🏙️ **João Pessoa (PB)** | [Acessar Portal](https://receita.joaopessoa.pb.gov.br/itbi/paginas/portal/login.html) | `joao_pessoa.py` | Ex: Necessita de Login. Uma vez emitido a guia, consta-se na dívida ativa - *ATENÇÃO* | _em desenvolvimento_ |
-| *(Adicione mais linhas conforme necessário)* | | | | |
+| *(futuras prefeituras ...)* | | | | |
 
 ---
 
