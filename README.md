@@ -117,6 +117,7 @@ Para executar um BOT específico, utilize o ponto de entrada principal, passando
 python main.py --cidade "joao_pessoa"
 
 (Nota: A execução via main.py é uma sugestão de implementação para o orquestrador.)
+```
 
 🤝 Como Contribuir
 Contribuições são muito bem-vindas! Se você deseja adicionar um novo BOT para uma prefeitura ou melhorar um existente, siga os passos:
