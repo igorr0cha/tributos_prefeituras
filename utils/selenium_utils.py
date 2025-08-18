@@ -234,11 +234,15 @@ def getDriver(url, headless=False, extensions=None):
     chrome_options = uc.ChromeOptions()
 
     # Define o caminho do Chrome se encontrado
+    
     if chrome_path:
         chrome_options.binary_location = chrome_path
     else:
+        chrome_default_path = os.path.join(
+            os.environ.get("USERPROFILE", ""), "AppData", "Local", "Google", "Chrome", "Application", "chrome.exe"
+        )
         raise Exception(
-            f"Chrome não encontrado no sistema. Verifique se o Google Chrome está instalado. Caminho: { os.path.join(os.environ.get("USERPROFILE", ""), "AppData\\Local\\Google\\Chrome\\Application\\chrome.exe"),}"
+            f"Chrome não encontrado no sistema. Verifique se o Google Chrome está instalado. Caminho: {chrome_default_path}"
         )
 
     # Adiciona as opções experimentais para download
