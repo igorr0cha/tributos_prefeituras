@@ -119,18 +119,18 @@ python main.py --cidade "joao_pessoa"
 (Nota: A execução via main.py é uma sugestão de implementação para o orquestrador.)
 ```
 
-🤝 Como Contribuir
+### 🤝 Como Contribuir
 Contribuições são muito bem-vindas! Se você deseja adicionar um novo BOT para uma prefeitura ou melhorar um existente, siga os passos:
 
-Faça um Fork deste repositório.
+1. Faça um Fork deste repositório.
 
-Crie uma nova Branch: git checkout -b feature/nome-da-cidade.
+2. Crie uma nova Branch: git checkout -b feature/nome-da-cidade.
 
-Faça suas alterações e Commite: git commit -m 'feat: Adiciona BOT para a cidade X'.
+3. Faça suas alterações e Commite: git commit -m 'feat: Adiciona BOT para a cidade X'.
 
-Envie para a sua Branch: git push origin feature/nome-da-cidade.
+4. Envie para a sua Branch: git push origin feature/nome-da-cidade.
 
-Abra um Pull Request detalhando as mudanças.
+5. Abra um Pull Request detalhando as mudanças.
 
-📄 Licença
+### 📄 Licença
 Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
