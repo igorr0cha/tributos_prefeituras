@@ -3,6 +3,8 @@
 import logging
 import os
 
+from bots.sao_paulo import sao_paulo_bot
+
 if not os.path.exists("logs"):
     os.makedirs("logs")
 
@@ -16,7 +18,7 @@ logging.basicConfig(
 def main():
     logging.info("Iniciando a automação...")
     # TESTANDO COM SÃO PAULO
-    
+    sao_paulo_bot()
     
 
     logging.info("Automação concluída com sucesso.")
