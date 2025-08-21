@@ -1,1 +1,210 @@
 # Arquivo de log para registrar o que acontece
+2025-08-21 11:46:36,072 - INFO - Iniciando a automação...
+2025-08-21 11:46:36,072 - INFO - Iniciando o bot de São Paulo...
+2025-08-21 11:46:36,072 - INFO - Operação do bot em andamento...
+2025-08-21 11:46:36,074 - INFO - Using default request storage
+2025-08-21 11:46:36,110 - INFO - Created proxy listening on 127.0.0.1:54242
+2025-08-21 11:46:36,112 - ERROR - Erro no bot de São Paulo: Message: Unable to obtain driver for chrome; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+
+2025-08-21 11:46:36,112 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-21 11:46:36,112 - INFO - Automação concluída com sucesso.
+2025-08-21 11:48:56,537 - INFO - Iniciando a automação...
+2025-08-21 11:48:56,537 - INFO - Iniciando o bot de São Paulo...
+2025-08-21 11:48:56,537 - INFO - Operação do bot em andamento...
+2025-08-21 11:48:56,541 - INFO - Using default request storage
+2025-08-21 11:48:56,560 - INFO - Created proxy listening on 127.0.0.1:54309
+2025-08-21 11:48:56,560 - ERROR - Erro no bot de São Paulo: Message: Unable to obtain driver for chrome; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+
+2025-08-21 11:48:56,560 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-21 11:48:56,561 - INFO - Automação concluída com sucesso.
+2025-08-21 11:49:33,648 - INFO - Iniciando a automação...
+2025-08-21 11:49:33,648 - INFO - Iniciando o bot de São Paulo...
+2025-08-21 11:49:33,648 - INFO - Operação do bot em andamento...
+2025-08-21 11:49:33,650 - INFO - Using default request storage
+2025-08-21 11:49:33,659 - INFO - Created proxy listening on 127.0.0.1:54327
+2025-08-21 11:49:33,659 - ERROR - Erro no bot de São Paulo: Message: Unable to obtain driver for chrome; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+
+2025-08-21 11:49:33,660 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-21 11:49:33,660 - INFO - Automação concluída com sucesso.
+2025-08-21 11:51:10,084 - INFO - Iniciando a automação...
+2025-08-21 11:51:10,085 - INFO - Iniciando o bot de São Paulo...
+2025-08-21 11:51:10,085 - INFO - Operação do bot em andamento...
+2025-08-21 11:51:10,086 - INFO - Using default request storage
+2025-08-21 11:51:10,097 - INFO - Created proxy listening on 127.0.0.1:54380
+2025-08-21 11:51:10,098 - ERROR - Erro no bot de São Paulo: Message: Unable to obtain driver for chrome; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+
+2025-08-21 11:51:10,098 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-21 11:51:10,098 - INFO - Automação concluída com sucesso.
+2025-08-21 11:52:35,483 - INFO - Iniciando a automação...
+2025-08-21 11:52:35,483 - INFO - Iniciando o bot de São Paulo...
+2025-08-21 11:52:35,484 - INFO - Operação do bot em andamento...
+2025-08-21 11:52:39,697 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-21 11:52:39,698 - INFO - Automação concluída com sucesso.
+2025-08-21 11:57:36,521 - INFO - Iniciando a automação...
+2025-08-21 11:57:36,521 - INFO - Iniciando o bot de São Paulo...
+2025-08-21 11:57:36,521 - INFO - Operação do bot em andamento...
+2025-08-21 11:57:50,360 - ERROR - Erro no bot de São Paulo: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x94ffc3+65331]
+	GetHandleVerifier [0x0x950004+65396]
+	(No symbol) [0x0x743f63]
+	(No symbol) [0x0x78c99e]
+	(No symbol) [0x0x78cd3b]
+	(No symbol) [0x0x7d53d2]
+	(No symbol) [0x0x7b1524]
+	(No symbol) [0x0x7d2bcb]
+	(No symbol) [0x0x7b12d6]
+	(No symbol) [0x0x780910]
+	(No symbol) [0x0x781784]
+	GetHandleVerifier [0x0xb938b3+2439203]
+	GetHandleVerifier [0x0xb8eae2+2419282]
+	GetHandleVerifier [0x0x97712a+225434]
+	GetHandleVerifier [0x0x966e08+159096]
+	GetHandleVerifier [0x0x96dd5d+187597]
+	GetHandleVerifier [0x0x957ad8+96840]
+	GetHandleVerifier [0x0x957c62+97234]
+	GetHandleVerifier [0x0x94277a+9962]
+	BaseThreadInitThunk [0x0x76ccfcc9+25]
+	RtlGetAppContainerNamedObjectPath [0x0x778180ce+286]
+	RtlGetAppContainerNamedObjectPath [0x0x7781809e+238]
+
+2025-08-21 11:57:50,360 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-21 11:57:50,360 - INFO - Automação concluída com sucesso.
+2025-08-21 12:00:29,583 - INFO - Iniciando a automação...
+2025-08-21 12:00:29,584 - INFO - Iniciando o bot de São Paulo...
+2025-08-21 12:00:29,584 - INFO - Operação do bot em andamento...
+2025-08-21 12:00:29,585 - INFO - Using default request storage
+2025-08-21 12:00:29,609 - INFO - Created proxy listening on 127.0.0.1:55174
+2025-08-21 12:00:29,611 - ERROR - Erro no bot de São Paulo: Message: Unable to obtain driver for chrome; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+
+2025-08-21 12:00:29,611 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-21 12:00:29,611 - INFO - Automação concluída com sucesso.
+2025-08-21 12:04:11,012 - INFO - Iniciando a automação...
+2025-08-21 12:04:11,012 - INFO - Iniciando o bot de São Paulo...
+2025-08-21 12:04:11,012 - INFO - Operação do bot em andamento...
+2025-08-21 12:04:11,014 - INFO - Using default request storage
+2025-08-21 12:04:11,023 - INFO - Created proxy listening on 127.0.0.1:55381
+2025-08-21 12:04:11,024 - ERROR - Erro no bot de São Paulo: Message: Unable to obtain driver for chrome; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+
+2025-08-21 12:04:11,024 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-21 12:04:11,024 - INFO - Automação concluída com sucesso.
+2025-08-21 12:06:53,203 - INFO - Iniciando a automação...
+2025-08-21 12:06:53,203 - INFO - Iniciando o bot de São Paulo...
+2025-08-21 12:06:53,203 - INFO - Operação do bot em andamento...
+2025-08-21 12:07:34,265 - ERROR - Erro no bot de São Paulo: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x94ffc3+65331]
+	GetHandleVerifier [0x0x950004+65396]
+	(No symbol) [0x0x743f63]
+	(No symbol) [0x0x78c99e]
+	(No symbol) [0x0x78cd3b]
+	(No symbol) [0x0x7d53d2]
+	(No symbol) [0x0x7b1524]
+	(No symbol) [0x0x7d2bcb]
+	(No symbol) [0x0x7b12d6]
+	(No symbol) [0x0x780910]
+	(No symbol) [0x0x781784]
+	GetHandleVerifier [0x0xb938b3+2439203]
+	GetHandleVerifier [0x0xb8eae2+2419282]
+	GetHandleVerifier [0x0x97712a+225434]
+	GetHandleVerifier [0x0x966e08+159096]
+	GetHandleVerifier [0x0x96dd5d+187597]
+	GetHandleVerifier [0x0x957ad8+96840]
+	GetHandleVerifier [0x0x957c62+97234]
+	GetHandleVerifier [0x0x94277a+9962]
+	BaseThreadInitThunk [0x0x76ccfcc9+25]
+	RtlGetAppContainerNamedObjectPath [0x0x778180ce+286]
+	RtlGetAppContainerNamedObjectPath [0x0x7781809e+238]
+
+2025-08-21 12:07:34,265 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-21 12:07:34,265 - INFO - Automação concluída com sucesso.
+2025-08-21 12:07:53,750 - INFO - Iniciando a automação...
+2025-08-21 12:07:53,750 - INFO - Iniciando o bot de São Paulo...
+2025-08-21 12:07:53,750 - INFO - Operação do bot em andamento...
+2025-08-21 12:08:06,797 - ERROR - Erro no bot de São Paulo: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x94ffc3+65331]
+	GetHandleVerifier [0x0x950004+65396]
+	(No symbol) [0x0x743f63]
+	(No symbol) [0x0x78c99e]
+	(No symbol) [0x0x78cd3b]
+	(No symbol) [0x0x7d53d2]
+	(No symbol) [0x0x7b1524]
+	(No symbol) [0x0x7d2bcb]
+	(No symbol) [0x0x7b12d6]
+	(No symbol) [0x0x780910]
+	(No symbol) [0x0x781784]
+	GetHandleVerifier [0x0xb938b3+2439203]
+	GetHandleVerifier [0x0xb8eae2+2419282]
+	GetHandleVerifier [0x0x97712a+225434]
+	GetHandleVerifier [0x0x966e08+159096]
+	GetHandleVerifier [0x0x96dd5d+187597]
+	GetHandleVerifier [0x0x957ad8+96840]
+	GetHandleVerifier [0x0x957c62+97234]
+	GetHandleVerifier [0x0x94277a+9962]
+	BaseThreadInitThunk [0x0x76ccfcc9+25]
+	RtlGetAppContainerNamedObjectPath [0x0x778180ce+286]
+	RtlGetAppContainerNamedObjectPath [0x0x7781809e+238]
+
+2025-08-21 12:08:06,797 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-21 12:08:06,797 - INFO - Automação concluída com sucesso.
+2025-08-21 12:08:27,872 - INFO - Iniciando a automação...
+2025-08-21 12:08:27,872 - INFO - Iniciando o bot de São Paulo...
+2025-08-21 12:08:27,872 - INFO - Operação do bot em andamento...
+2025-08-21 12:08:40,285 - ERROR - Erro no bot de São Paulo: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x94ffc3+65331]
+	GetHandleVerifier [0x0x950004+65396]
+	(No symbol) [0x0x743f63]
+	(No symbol) [0x0x78c99e]
+	(No symbol) [0x0x78cd3b]
+	(No symbol) [0x0x7d53d2]
+	(No symbol) [0x0x7b1524]
+	(No symbol) [0x0x7d2bcb]
+	(No symbol) [0x0x7b12d6]
+	(No symbol) [0x0x780910]
+	(No symbol) [0x0x781784]
+	GetHandleVerifier [0x0xb938b3+2439203]
+	GetHandleVerifier [0x0xb8eae2+2419282]
+	GetHandleVerifier [0x0x97712a+225434]
+	GetHandleVerifier [0x0x966e08+159096]
+	GetHandleVerifier [0x0x96dd5d+187597]
+	GetHandleVerifier [0x0x957ad8+96840]
+	GetHandleVerifier [0x0x957c62+97234]
+	GetHandleVerifier [0x0x94277a+9962]
+	BaseThreadInitThunk [0x0x76ccfcc9+25]
+	RtlGetAppContainerNamedObjectPath [0x0x778180ce+286]
+	RtlGetAppContainerNamedObjectPath [0x0x7781809e+238]
+
+2025-08-21 12:08:40,285 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-21 12:08:40,285 - INFO - Automação concluída com sucesso.
+2025-08-21 12:12:08,002 - INFO - Iniciando a automação...
+2025-08-21 12:12:08,002 - INFO - Iniciando o bot de São Paulo...
+2025-08-21 12:12:08,002 - INFO - Operação do bot em andamento...
+2025-08-21 12:12:21,804 - ERROR - Erro no bot de São Paulo: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x94ffc3+65331]
+	GetHandleVerifier [0x0x950004+65396]
+	(No symbol) [0x0x743f63]
+	(No symbol) [0x0x78c99e]
+	(No symbol) [0x0x78cd3b]
+	(No symbol) [0x0x7d53d2]
+	(No symbol) [0x0x7b1524]
+	(No symbol) [0x0x7d2bcb]
+	(No symbol) [0x0x7b12d6]
+	(No symbol) [0x0x780910]
+	(No symbol) [0x0x781784]
+	GetHandleVerifier [0x0xb938b3+2439203]
+	GetHandleVerifier [0x0xb8eae2+2419282]
+	GetHandleVerifier [0x0x97712a+225434]
+	GetHandleVerifier [0x0x966e08+159096]
+	GetHandleVerifier [0x0x96dd5d+187597]
+	GetHandleVerifier [0x0x957ad8+96840]
+	GetHandleVerifier [0x0x957c62+97234]
+	GetHandleVerifier [0x0x94277a+9962]
+	BaseThreadInitThunk [0x0x76ccfcc9+25]
+	RtlGetAppContainerNamedObjectPath [0x0x778180ce+286]
+	RtlGetAppContainerNamedObjectPath [0x0x7781809e+238]
+
+2025-08-21 12:12:21,804 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-21 12:12:21,804 - INFO - Automação concluída com sucesso.

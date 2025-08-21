@@ -6,5 +6,5 @@ python-dotenv
 pandas
 openpyxl
 pytest
-blinker
+blinker==1.4
 pytest-cov

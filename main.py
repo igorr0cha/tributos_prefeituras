@@ -2,6 +2,7 @@
 
 import logging
 import os
+import utils as u
 
 from bots.sao_paulo import sao_paulo_bot
 
@@ -17,6 +18,7 @@ logging.basicConfig(
 
 def main():
     logging.info("Iniciando a automação...")
+    
     # TESTANDO COM SÃO PAULO
     sao_paulo_bot()
     
@@ -25,4 +27,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-# end main
