@@ -1,5 +1,8 @@
-# Dependências do projeto
 undetected-chromedriver
 webdriver-manager
 selenium-wire
 selenium
+python-dotenv
+pandas
+openpyxl
+pytest
