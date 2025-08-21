@@ -12,3 +12,15 @@ logging.basicConfig(
     filename='logs/automation.log',
     filemode='a'
 )
+
+def main():
+    logging.info("Iniciando a automação...")
+    # TESTANDO COM SÃO PAULO
+    
+    
+
+    logging.info("Automação concluída com sucesso.")
+
+if __name__ == "__main__":
+    main()
+# end main
