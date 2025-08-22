@@ -208,3 +208,270 @@ Stacktrace:
 
 2025-08-21 12:12:21,804 - INFO - Bot de São Paulo concluído com sucesso.
 2025-08-21 12:12:21,804 - INFO - Automação concluída com sucesso.
+2025-08-22 08:29:21,160 - INFO - Iniciando a automação...
+2025-08-22 08:29:21,161 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 08:29:21,162 - INFO - Operação do bot em andamento...
+2025-08-22 08:29:26,930 - ERROR - Erro no bot de São Paulo: Alert Text: Não foram selecionadas as opções minimamente necessárias para o funcionamento adequado da aplicação. Clique em cancelar para selecionar os termos, ou OK para sair e ser desconectado
+Message: unexpected alert open: {Alert text : Não foram selecionadas as opções minimamente necessárias para o funcionamento adequado da aplicação. Clique em cancelar para selecionar os termos, ou OK para sair e ser desconectado}
+  (Session info: chrome=139.0.7258.129)
+Stacktrace:
+	GetHandleVerifier [0x0x31ffc3+65331]
+	GetHandleVerifier [0x0x320004+65396]
+	(No symbol) [0x0x113f63]
+	(No symbol) [0x0x1a3514]
+	(No symbol) [0x0x1812d6]
+	(No symbol) [0x0x150910]
+	(No symbol) [0x0x151784]
+	GetHandleVerifier [0x0x5638b3+2439203]
+	GetHandleVerifier [0x0x55eae2+2419282]
+	GetHandleVerifier [0x0x34712a+225434]
+	GetHandleVerifier [0x0x336e08+159096]
+	GetHandleVerifier [0x0x33dd5d+187597]
+	GetHandleVerifier [0x0x327ad8+96840]
+	GetHandleVerifier [0x0x327c62+97234]
+	GetHandleVerifier [0x0x31277a+9962]
+	BaseThreadInitThunk [0x0x76ccfcc9+25]
+	RtlGetAppContainerNamedObjectPath [0x0x778180ce+286]
+	RtlGetAppContainerNamedObjectPath [0x0x7781809e+238]
+	(No symbol) [0x0]
+
+2025-08-22 08:29:26,931 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-22 08:29:26,931 - INFO - Automação concluída com sucesso.
+2025-08-22 08:29:37,417 - INFO - Iniciando a automação...
+2025-08-22 08:29:37,417 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 08:29:37,417 - INFO - Operação do bot em andamento...
+2025-08-22 08:29:40,745 - ERROR - Erro no bot de São Paulo: Alert Text: Não foram selecionadas as opções minimamente necessárias para o funcionamento adequado da aplicação. Clique em cancelar para selecionar os termos, ou OK para sair e ser desconectado
+Message: unexpected alert open: {Alert text : Não foram selecionadas as opções minimamente necessárias para o funcionamento adequado da aplicação. Clique em cancelar para selecionar os termos, ou OK para sair e ser desconectado}
+  (Session info: chrome=139.0.7258.129)
+Stacktrace:
+	GetHandleVerifier [0x0x31ffc3+65331]
+	GetHandleVerifier [0x0x320004+65396]
+	(No symbol) [0x0x113f63]
+	(No symbol) [0x0x1a3514]
+	(No symbol) [0x0x1812d6]
+	(No symbol) [0x0x150910]
+	(No symbol) [0x0x151784]
+	GetHandleVerifier [0x0x5638b3+2439203]
+	GetHandleVerifier [0x0x55eae2+2419282]
+	GetHandleVerifier [0x0x34712a+225434]
+	GetHandleVerifier [0x0x336e08+159096]
+	GetHandleVerifier [0x0x33dd5d+187597]
+	GetHandleVerifier [0x0x327ad8+96840]
+	GetHandleVerifier [0x0x327c62+97234]
+	GetHandleVerifier [0x0x31277a+9962]
+	BaseThreadInitThunk [0x0x76ccfcc9+25]
+	RtlGetAppContainerNamedObjectPath [0x0x778180ce+286]
+	RtlGetAppContainerNamedObjectPath [0x0x7781809e+238]
+	(No symbol) [0x0]
+
+2025-08-22 08:29:40,745 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-22 08:29:40,745 - INFO - Automação concluída com sucesso.
+2025-08-22 08:29:48,446 - INFO - Iniciando a automação...
+2025-08-22 08:29:48,447 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 08:29:48,447 - INFO - Operação do bot em andamento...
+2025-08-22 08:30:00,928 - ERROR - Erro no bot de São Paulo: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x31ffc3+65331]
+	GetHandleVerifier [0x0x320004+65396]
+	(No symbol) [0x0x113f63]
+	(No symbol) [0x0x15c99e]
+	(No symbol) [0x0x15cd3b]
+	(No symbol) [0x0x1a53d2]
+	(No symbol) [0x0x181524]
+	(No symbol) [0x0x1a2bcb]
+	(No symbol) [0x0x1812d6]
+	(No symbol) [0x0x150910]
+	(No symbol) [0x0x151784]
+	GetHandleVerifier [0x0x5638b3+2439203]
+	GetHandleVerifier [0x0x55eae2+2419282]
+	GetHandleVerifier [0x0x34712a+225434]
+	GetHandleVerifier [0x0x336e08+159096]
+	GetHandleVerifier [0x0x33dd5d+187597]
+	GetHandleVerifier [0x0x327ad8+96840]
+	GetHandleVerifier [0x0x327c62+97234]
+	GetHandleVerifier [0x0x31277a+9962]
+	BaseThreadInitThunk [0x0x76ccfcc9+25]
+	RtlGetAppContainerNamedObjectPath [0x0x778180ce+286]
+	RtlGetAppContainerNamedObjectPath [0x0x7781809e+238]
+	(No symbol) [0x0]
+
+2025-08-22 08:30:00,928 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-22 08:30:00,928 - INFO - Automação concluída com sucesso.
+2025-08-22 08:35:52,046 - INFO - Iniciando a automação...
+2025-08-22 08:35:52,046 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 08:35:52,047 - INFO - Operação do bot em andamento...
+2025-08-22 08:35:54,156 - ERROR - Erro no bot de São Paulo: Message: no such element: Unable to locate element: {"method":"css selector","selector":".cc__button__autorizacao--all"}
+  (Session info: chrome=139.0.7258.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+Stacktrace:
+	GetHandleVerifier [0x0x31ffc3+65331]
+	GetHandleVerifier [0x0x320004+65396]
+	(No symbol) [0x0x113f63]
+	(No symbol) [0x0x15c99e]
+	(No symbol) [0x0x15cd3b]
+	(No symbol) [0x0x1a53d2]
+	(No symbol) [0x0x181524]
+	(No symbol) [0x0x1a2bcb]
+	(No symbol) [0x0x1812d6]
+	(No symbol) [0x0x150910]
+	(No symbol) [0x0x151784]
+	GetHandleVerifier [0x0x5638b3+2439203]
+	GetHandleVerifier [0x0x55eae2+2419282]
+	GetHandleVerifier [0x0x34712a+225434]
+	GetHandleVerifier [0x0x336e08+159096]
+	GetHandleVerifier [0x0x33dd5d+187597]
+	GetHandleVerifier [0x0x327ad8+96840]
+	GetHandleVerifier [0x0x327c62+97234]
+	GetHandleVerifier [0x0x31277a+9962]
+	BaseThreadInitThunk [0x0x76ccfcc9+25]
+	RtlGetAppContainerNamedObjectPath [0x0x778180ce+286]
+	RtlGetAppContainerNamedObjectPath [0x0x7781809e+238]
+	(No symbol) [0x0]
+
+2025-08-22 08:35:54,156 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-22 08:35:54,156 - INFO - Automação concluída com sucesso.
+2025-08-22 08:44:26,634 - INFO - Iniciando a automação...
+2025-08-22 08:44:26,634 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 08:44:26,634 - INFO - Operação do bot em andamento...
+2025-08-22 08:44:26,634 - ERROR - Erro no bot de São Paulo: name 'By' is not defined
+2025-08-22 08:44:26,634 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-22 08:44:26,634 - INFO - Automação concluída com sucesso.
+2025-08-22 08:44:54,095 - INFO - Iniciando a automação...
+2025-08-22 08:44:54,095 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 08:44:54,095 - INFO - Operação do bot em andamento...
+2025-08-22 08:44:54,111 - ERROR - Erro no bot de São Paulo: Message: no such element: Unable to locate element: {"method":"css selector","selector":".cc__button__autorizacao--all"}
+  (Session info: chrome=139.0.7258.139); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6346178d5+2802741]
+	GetHandleVerifier [0x0x7ff63437eb70+79568]
+	(No symbol) [0x0x7ff63411c0fa]
+	(No symbol) [0x0x7ff634172a96]
+	(No symbol) [0x0x7ff634172d4c]
+	(No symbol) [0x0x7ff6341c6017]
+	(No symbol) [0x0x7ff63419accf]
+	(No symbol) [0x0x7ff6341c2e24]
+	(No symbol) [0x0x7ff63419aa63]
+	(No symbol) [0x0x7ff634163c91]
+	(No symbol) [0x0x7ff634164a23]
+	GetHandleVerifier [0x0x7ff634642ced+2979917]
+	GetHandleVerifier [0x0x7ff63463d0f3+2956371]
+	GetHandleVerifier [0x0x7ff63465acbd+3078173]
+	GetHandleVerifier [0x0x7ff63439836e+184014]
+	GetHandleVerifier [0x0x7ff6343a024f+216495]
+	GetHandleVerifier [0x0x7ff6343870c4+113700]
+	GetHandleVerifier [0x0x7ff634387279+114137]
+	GetHandleVerifier [0x0x7ff63436df78+10968]
+	BaseThreadInitThunk [0x0x7fff1af77374+20]
+	RtlUserThreadStart [0x0x7fff1c5bcc91+33]
+
+2025-08-22 08:44:54,111 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-22 08:44:54,111 - INFO - Automação concluída com sucesso.
+2025-08-22 08:45:45,034 - INFO - Iniciando a automação...
+2025-08-22 08:45:45,035 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 08:45:45,035 - INFO - Operação do bot em andamento...
+2025-08-22 08:45:45,101 - ERROR - Erro no bot de São Paulo: Message: no such element: Unable to locate element: {"method":"css selector","selector":".cc__button__autorizacao--all"}
+  (Session info: chrome=139.0.7258.139); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6346178d5+2802741]
+	GetHandleVerifier [0x0x7ff63437eb70+79568]
+	(No symbol) [0x0x7ff63411c0fa]
+	(No symbol) [0x0x7ff634172a96]
+	(No symbol) [0x0x7ff634172d4c]
+	(No symbol) [0x0x7ff6341c6017]
+	(No symbol) [0x0x7ff63419accf]
+	(No symbol) [0x0x7ff6341c2e24]
+	(No symbol) [0x0x7ff63419aa63]
+	(No symbol) [0x0x7ff634163c91]
+	(No symbol) [0x0x7ff634164a23]
+	GetHandleVerifier [0x0x7ff634642ced+2979917]
+	GetHandleVerifier [0x0x7ff63463d0f3+2956371]
+	GetHandleVerifier [0x0x7ff63465acbd+3078173]
+	GetHandleVerifier [0x0x7ff63439836e+184014]
+	GetHandleVerifier [0x0x7ff6343a024f+216495]
+	GetHandleVerifier [0x0x7ff6343870c4+113700]
+	GetHandleVerifier [0x0x7ff634387279+114137]
+	GetHandleVerifier [0x0x7ff63436df78+10968]
+	BaseThreadInitThunk [0x0x7fff1af77374+20]
+	RtlUserThreadStart [0x0x7fff1c5bcc91+33]
+
+2025-08-22 08:45:45,101 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-22 08:45:45,101 - INFO - Automação concluída com sucesso.
+2025-08-22 08:46:13,218 - INFO - Iniciando a automação...
+2025-08-22 08:46:13,219 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 08:46:13,219 - INFO - Operação do bot em andamento...
+2025-08-22 08:46:13,284 - ERROR - Erro no bot de São Paulo: Message: no such element: Unable to locate element: {"method":"css selector","selector":".cc__button__autorizacao--all"}
+  (Session info: chrome=139.0.7258.139); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6346178d5+2802741]
+	GetHandleVerifier [0x0x7ff63437eb70+79568]
+	(No symbol) [0x0x7ff63411c0fa]
+	(No symbol) [0x0x7ff634172a96]
+	(No symbol) [0x0x7ff634172d4c]
+	(No symbol) [0x0x7ff6341c6017]
+	(No symbol) [0x0x7ff63419accf]
+	(No symbol) [0x0x7ff6341c2e24]
+	(No symbol) [0x0x7ff63419aa63]
+	(No symbol) [0x0x7ff634163c91]
+	(No symbol) [0x0x7ff634164a23]
+	GetHandleVerifier [0x0x7ff634642ced+2979917]
+	GetHandleVerifier [0x0x7ff63463d0f3+2956371]
+	GetHandleVerifier [0x0x7ff63465acbd+3078173]
+	GetHandleVerifier [0x0x7ff63439836e+184014]
+	GetHandleVerifier [0x0x7ff6343a024f+216495]
+	GetHandleVerifier [0x0x7ff6343870c4+113700]
+	GetHandleVerifier [0x0x7ff634387279+114137]
+	GetHandleVerifier [0x0x7ff63436df78+10968]
+	BaseThreadInitThunk [0x0x7fff1af77374+20]
+	RtlUserThreadStart [0x0x7fff1c5bcc91+33]
+
+2025-08-22 08:46:13,285 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-22 08:46:13,285 - INFO - Automação concluída com sucesso.
+2025-08-22 08:46:29,087 - INFO - Iniciando a automação...
+2025-08-22 08:46:29,089 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 08:46:29,244 - INFO - Capturing response: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&laf=b64bin&json=standard 200 
+2025-08-22 08:47:14,171 - INFO - Operação do bot em andamento...
+2025-08-22 08:47:28,709 - INFO - Capturing request: http://update.googleapis.com/service/update2/json?cup2key=15:y_BS966_Hw8gvABuR2etTYi-fdXr-8Mfn3rSwizZiHQ&cup2hreq=377734745fcc83d61cd1ce3c96bb0295809456dfea2c928267a76278a556ce74
+2025-08-22 08:47:29,025 - INFO - Capturing response: http://update.googleapis.com/service/update2/json?cup2key=15:y_BS966_Hw8gvABuR2etTYi-fdXr-8Mfn3rSwizZiHQ&cup2hreq=377734745fcc83d61cd1ce3c96bb0295809456dfea2c928267a76278a556ce74 200 OK
+2025-08-22 08:48:05,767 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:48:05,966 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:48:47,012 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:48:47,223 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:49:32,383 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:49:32,564 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:49:59,709 - INFO - Iniciando a automação...
+2025-08-22 08:49:59,734 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 08:49:59,738 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/favicon.ico
+2025-08-22 08:49:59,779 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/?type=22 200 OK
+2025-08-22 08:49:59,807 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/favicon.ico 404 Not Found
+2025-08-22 08:50:00,752 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab2800cc84ac7bffe5680ac5fa9c2c6deba6c9ca3f941a13defc7871ea6c9789377b3d9f555ee90ff524b7?type=14
+2025-08-22 08:50:00,805 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab2800cc84ac7bffe5680ac5fa9c2c6deba6c9ca3f941a13defc7871ea6c9789377b3d9f555ee90ff524b7?type=14 200 OK
+2025-08-22 08:50:56,026 - INFO - Capturing request: http://update.googleapis.com/service/update2/json?cup2key=15:rdoFqSQDxsiPnJ969XrT3800W2KtfL_pyfkM38yoVHo&cup2hreq=e907d334ec14a957d53c9576dcc69cb730f6557cd4bd79bfcfaa878c2c766a20
+2025-08-22 08:50:56,326 - INFO - Capturing response: http://update.googleapis.com/service/update2/json?cup2key=15:rdoFqSQDxsiPnJ969XrT3800W2KtfL_pyfkM38yoVHo&cup2hreq=e907d334ec14a957d53c9576dcc69cb730f6557cd4bd79bfcfaa878c2c766a20 200 OK
+2025-08-22 08:51:00,687 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:51:00,862 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:51:05,202 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:51:05,373 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:51:14,148 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:51:14,365 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:51:27,150 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:51:27,446 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:51:37,732 - INFO - Operação do bot em andamento...
+2025-08-22 08:51:44,269 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:51:44,496 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:52:05,388 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:52:05,632 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:52:30,692 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:52:30,958 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:53:04,070 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:53:04,278 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:53:45,499 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:53:45,710 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:54:31,001 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:54:31,170 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:55:20,567 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:55:20,739 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:55:58,871 - INFO - Capturing request: http://clientservices.googleapis.com/uma/v2
+2025-08-22 08:55:59,163 - INFO - Capturing response: http://clientservices.googleapis.com/uma/v2 200 OK
+2025-08-22 08:56:14,222 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:56:14,392 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
+2025-08-22 08:57:12,044 - INFO - Capturing request: http://update.googleapis.com/service/update2/json
+2025-08-22 08:57:12,249 - INFO - Capturing response: http://update.googleapis.com/service/update2/json 200 OK
