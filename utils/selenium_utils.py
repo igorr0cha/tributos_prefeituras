@@ -9,6 +9,10 @@ import undetected_chromedriver as uc
 import flask
 import logging
 
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+import undetected_chromedriver as uc
+
 from seleniumwire import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -237,6 +241,87 @@ def find_chromedriver_path():
         raise Exception(f"Sistema operacional não suportado: {sistema}")
 
 def getDriver(url, headless=False, extensions=None):
+    """
+    Inicializa e configura o WebDriver do Chrome usando webdriver-manager.
+    """
+    # --- Parte 1: Configurações Iniciais (quase a mesma) ---
+    diretorio_projeto = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    download_dir = os.path.join(os.path.expanduser("~"), "Downloads")
+    print(f"Diretório de downloads: {download_dir}")
+
+    
+    print("Configurando o ChromeDriver com webdriver-manager...")
+    servico = ChromeService(ChromeDriverManager().install())
+
+    # Configuração das Opções do Chrome (igual ao seu) ---
+    chrome_options = uc.ChromeOptions()
+    
+    # Adiciona as opções experimentais para download
+    chrome_options.add_experimental_option(
+        "prefs",
+        {
+            "download.default_directory": download_dir,
+            "download.prompt_for_download": False,
+            "download.directory_upgrade": True,
+            "safebrowsing.enabled": False,
+            "profile.password_manager_enabled": False,
+            "credentials_enable_service": False,
+            "plugins.always_open_pdf_externally": True,
+        },
+    )
+
+    # Adiciona os argumentos comuns
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--disable-notifications")
+    chrome_options.add_argument("--lang=en-US")
+    chrome_options.add_argument("--ignore-certificate-errors")
+    chrome_options.add_argument("--allow-running-insecure-content")
+    
+    if headless:
+        chrome_options.add_argument("--headless=new")
+
+    # Adiciona extensões (igual ao seu)
+    if extensions:
+        for extension in extensions:
+            extension_path = os.path.join(diretorio_projeto, "extensions", extension)
+            if os.path.exists(extension_path):
+                chrome_options.add_argument(f"--load-extension={extension_path}")
+            else:
+                print(f"Extensão {extension} não encontrada em {extension_path}")
+
+    # --- Parte 4: Inicialização do Driver (igual ao seu, mas usando o novo 'servico') ---
+    seleniumwire_options = {
+        "verify_ssl": True,
+        "suppress_connection_errors": True,
+        "ignore_http_methods": ["OPTIONS"],
+    }
+
+    driver = webdriver.Chrome(
+        service=servico,  # A mágica acontece aqui!
+        options=chrome_options,
+        seleniumwire_options=seleniumwire_options,
+    )
+
+    driver.maximize_window()
+    
+    driver.execute_cdp_cmd(
+        "Browser.setDownloadBehavior",
+        {
+            "behavior": "allow",
+            "downloadPath": download_dir,
+        },
+    )
+    
+    if url.startswith("http"):
+        driver.get(url)
+    else:
+        driver.get(f"https://{url}")
+
+    return driver
+
+def getDriver_Local(url, headless=False, extensions=None):
     # Detecta o sistema operacional e arquitetura
     sistema = platform.system().lower()
 

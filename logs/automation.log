@@ -952,3 +952,285 @@ Stacktrace:
 2025-08-22 12:34:35,912 - ERROR - Elemento não encontrado com By.CLASS_NAME = 'cc__button__autorizacao--all'
 2025-08-22 12:34:35,912 - INFO - Bot de São Paulo concluído com sucesso.
 2025-08-22 12:34:35,912 - INFO - Automação concluída com sucesso.
+2025-08-22 12:43:47,912 - INFO - Iniciando a automação...
+2025-08-22 12:43:47,913 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 12:43:47,913 - INFO - Operação do bot em andamento...
+2025-08-22 12:43:47,913 - INFO - ====== WebDriver manager ======
+2025-08-22 12:43:48,972 - INFO - Get LATEST chromedriver version for google-chrome
+2025-08-22 12:43:49,117 - INFO - Get LATEST chromedriver version for google-chrome
+2025-08-22 12:43:49,250 - INFO - Driver [C:\Users\igor.rocha\.wdm\drivers\chromedriver\win64\139.0.7258.138\chromedriver-win32/chromedriver.exe] found in cache
+2025-08-22 12:43:49,250 - INFO - Using default request storage
+2025-08-22 12:43:49,271 - INFO - Created proxy listening on 127.0.0.1:51583
+2025-08-22 12:43:51,632 - INFO - Capturing request: http://clients2.google.com/time/1/current?cup2key=9:6rRBdRkQNyw4S547MlbUHWYoSDSr2MWnRbndYv9C3E0&cup2hreq=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+2025-08-22 12:43:51,811 - INFO - Capturing response: http://clients2.google.com/time/1/current?cup2key=9:6rRBdRkQNyw4S547MlbUHWYoSDSr2MWnRbndYv9C3E0&cup2hreq=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 200 OK
+2025-08-22 12:43:52,051 - INFO - Capturing request: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&laf=b64bin&json=standard
+2025-08-22 12:43:52,235 - INFO - Capturing response: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&laf=b64bin&json=standard 200 
+2025-08-22 12:43:53,534 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL
+2025-08-22 12:43:53,594 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL 200 OK
+2025-08-22 12:43:53,619 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/?type=18
+2025-08-22 12:43:53,653 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=17
+2025-08-22 12:43:53,666 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/?type=18 200 OK
+2025-08-22 12:43:53,674 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/css/bootstrap.min.css
+2025-08-22 12:43:53,724 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=17 200 OK
+2025-08-22 12:43:53,742 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/css/bootstrap.min.css 200 OK
+2025-08-22 12:43:53,747 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/css/geral.css
+2025-08-22 12:43:53,768 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/css/estilo.css
+2025-08-22 12:43:53,799 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/css/geral.css 200 OK
+2025-08-22 12:43:53,827 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/jquery-3.4.0.js
+2025-08-22 12:43:53,838 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/dist/css/main.css
+2025-08-22 12:43:53,845 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/css/estilo.css 200 OK
+2025-08-22 12:43:53,871 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/bootstrap.min.js
+2025-08-22 12:43:53,892 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/jquery.mask.min.js
+2025-08-22 12:43:53,901 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/dist/vue/vendor.js
+2025-08-22 12:43:53,903 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/json2.min.js
+2025-08-22 12:43:53,907 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/dist/css/main.css 200 OK
+2025-08-22 12:43:53,913 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/dist/vue/main.js
+2025-08-22 12:43:53,941 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/jquery.mask.min.js 200 OK
+2025-08-22 12:43:53,954 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/json2.min.js 200 OK
+2025-08-22 12:43:53,967 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/bootstrap.min.js 200 OK
+2025-08-22 12:43:54,017 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/jquery-3.4.0.js 200 OK
+2025-08-22 12:43:54,046 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/dist/vue/main.js 200 OK
+2025-08-22 12:43:54,227 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/dist/vue/vendor.js 200 OK
+2025-08-22 12:43:54,971 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/webMethodNaturezaTransacao
+2025-08-22 12:43:55,049 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/exclamacao-aviso.jpg
+2025-08-22 12:43:55,053 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/MensagemCadastro.png
+2025-08-22 12:43:55,058 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/sprite.png
+2025-08-22 12:43:55,062 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/vaga.svg
+2025-08-22 12:43:55,065 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/prefeituraV.png
+2025-08-22 12:43:55,070 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/webMethodNaturezaTransacao 200 OK
+2025-08-22 12:43:55,091 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/BuscarConfiguracoesAplicacao
+2025-08-22 12:43:55,108 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/exclamacao-aviso.jpg 200 OK
+2025-08-22 12:43:55,132 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/MensagemCadastro.png 200 OK
+2025-08-22 12:43:55,154 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/vaga.svg 200 OK
+2025-08-22 12:43:55,158 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_bold_macroman/PTS75F-webfont.woff
+2025-08-22 12:43:55,170 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/BuscarConfiguracoesAplicacao 200 OK
+2025-08-22 12:43:55,182 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/sprite.png 200 OK
+2025-08-22 12:43:55,188 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/prefeituraV.png 200 OK
+2025-08-22 12:43:55,193 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/?type=19
+2025-08-22 12:43:55,195 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_italic_macroman/PTS56F-webfont.woff
+2025-08-22 12:43:55,198 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/WebMethodBuscarTipoFinanciamento
+2025-08-22 12:43:55,212 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_bold_macroman/PTS75F-webfont.woff 200 OK
+2025-08-22 12:43:55,237 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/?type=19 200 OK
+2025-08-22 12:43:55,256 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_italic_macroman/PTS56F-webfont.woff 200 OK
+2025-08-22 12:43:55,259 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=10
+2025-08-22 12:43:55,262 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/WebMethodBuscarTipoFinanciamento 200 OK
+2025-08-22 12:43:55,349 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=10 200 OK
+2025-08-22 12:43:55,446 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/?type=22
+2025-08-22 12:43:55,460 - INFO - Aceitando cookies...
+2025-08-22 12:43:55,461 - INFO - Procurando elemento com: By.CLASS_NAME = 'cc__button__autorizacao--all'
+2025-08-22 12:43:55,472 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/favicon.ico
+2025-08-22 12:43:55,477 - ERROR - Elemento não encontrado com By.CLASS_NAME = 'cc__button__autorizacao--all'
+2025-08-22 12:43:55,477 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-22 12:43:55,477 - INFO - Automação concluída com sucesso.
+2025-08-22 12:46:09,313 - INFO - Iniciando a automação...
+2025-08-22 12:46:09,313 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 12:46:09,313 - INFO - Operação do bot em andamento...
+2025-08-22 12:46:09,314 - INFO - ====== WebDriver manager ======
+2025-08-22 12:46:10,355 - INFO - Get LATEST chromedriver version for google-chrome
+2025-08-22 12:46:10,476 - INFO - Get LATEST chromedriver version for google-chrome
+2025-08-22 12:46:10,609 - INFO - Driver [C:\Users\igor.rocha\.wdm\drivers\chromedriver\win64\139.0.7258.138\chromedriver-win32/chromedriver.exe] found in cache
+2025-08-22 12:46:10,609 - INFO - Using default request storage
+2025-08-22 12:46:10,625 - INFO - Created proxy listening on 127.0.0.1:52012
+2025-08-22 12:46:11,608 - INFO - Capturing request: http://clients2.google.com/time/1/current?cup2key=9:rR-64eNIuTWLMiNtLYV8xjlmNLD4AcKT55eQASRax2Y&cup2hreq=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+2025-08-22 12:46:11,792 - INFO - Capturing response: http://clients2.google.com/time/1/current?cup2key=9:rR-64eNIuTWLMiNtLYV8xjlmNLD4AcKT55eQASRax2Y&cup2hreq=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 200 OK
+2025-08-22 12:46:12,048 - INFO - Capturing request: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&laf=b64bin&json=standard
+2025-08-22 12:46:12,337 - INFO - Capturing response: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&laf=b64bin&json=standard 200 
+2025-08-22 12:46:13,068 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL
+2025-08-22 12:46:13,126 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL 200 OK
+2025-08-22 12:46:13,143 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/?type=18
+2025-08-22 12:46:13,182 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=17
+2025-08-22 12:46:13,190 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/?type=18 200 OK
+2025-08-22 12:46:13,198 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/css/bootstrap.min.css
+2025-08-22 12:46:13,232 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=17 200 OK
+2025-08-22 12:46:13,256 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/css/bootstrap.min.css 200 OK
+2025-08-22 12:46:13,269 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/css/geral.css
+2025-08-22 12:46:13,277 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/css/estilo.css
+2025-08-22 12:46:13,334 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/css/geral.css 200 OK
+2025-08-22 12:46:13,340 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/css/estilo.css 200 OK
+2025-08-22 12:46:13,357 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/dist/css/main.css
+2025-08-22 12:46:13,365 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/jquery-3.4.0.js
+2025-08-22 12:46:13,434 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/dist/css/main.css 200 OK
+2025-08-22 12:46:13,438 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/jquery.mask.min.js
+2025-08-22 12:46:13,444 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/dist/vue/vendor.js
+2025-08-22 12:46:13,447 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/json2.min.js
+2025-08-22 12:46:13,448 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/bootstrap.min.js
+2025-08-22 12:46:13,450 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/dist/vue/main.js
+2025-08-22 12:46:13,504 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/json2.min.js 200 OK
+2025-08-22 12:46:13,512 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/jquery.mask.min.js 200 OK
+2025-08-22 12:46:13,763 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/bootstrap.min.js 200 OK
+2025-08-22 12:46:14,078 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/dist/vue/main.js 200 OK
+2025-08-22 12:46:14,133 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/jquery-3.4.0.js 200 OK
+2025-08-22 12:46:14,615 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/dist/vue/vendor.js 200 OK
+2025-08-22 12:46:14,693 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/webMethodNaturezaTransacao
+2025-08-22 12:46:14,756 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/prefeituraV.png
+2025-08-22 12:46:14,760 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/exclamacao-aviso.jpg
+2025-08-22 12:46:14,763 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/sprite.png
+2025-08-22 12:46:14,764 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/MensagemCadastro.png
+2025-08-22 12:46:14,766 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/vaga.svg
+2025-08-22 12:46:14,817 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/exclamacao-aviso.jpg 200 OK
+2025-08-22 12:46:14,826 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/webMethodNaturezaTransacao 200 OK
+2025-08-22 12:46:14,832 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/MensagemCadastro.png 200 OK
+2025-08-22 12:46:14,844 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/vaga.svg 200 OK
+2025-08-22 12:46:14,865 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_bold_macroman/PTS75F-webfont.woff
+2025-08-22 12:46:14,881 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/prefeituraV.png 200 OK
+2025-08-22 12:46:14,897 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_italic_macroman/PTS56F-webfont.woff
+2025-08-22 12:46:14,907 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/BuscarConfiguracoesAplicacao
+2025-08-22 12:46:14,909 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/?type=19
+2025-08-22 12:46:14,912 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/WebMethodBuscarTipoFinanciamento
+2025-08-22 12:46:14,916 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_bold_macroman/PTS75F-webfont.woff 200 OK
+2025-08-22 12:46:14,954 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/BuscarConfiguracoesAplicacao 200 OK
+2025-08-22 12:46:14,965 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/sprite.png 200 OK
+2025-08-22 12:46:14,972 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/?type=19 200 OK
+2025-08-22 12:46:14,975 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/WebMethodBuscarTipoFinanciamento 200 OK
+2025-08-22 12:46:14,990 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=10
+2025-08-22 12:46:14,995 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_italic_macroman/PTS56F-webfont.woff 200 OK
+2025-08-22 12:46:15,150 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=10 200 OK
+2025-08-22 12:46:15,243 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/?type=22
+2025-08-22 12:46:15,255 - INFO - Aceitando cookies...
+2025-08-22 12:46:15,255 - INFO - Procurando elemento com: By.CLASS_NAME = 'cc__button__autorizacao--all'
+2025-08-22 12:46:15,264 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/favicon.ico
+2025-08-22 12:46:15,268 - ERROR - Elemento não encontrado com By.CLASS_NAME = 'cc__button__autorizacao--all'
+2025-08-22 12:46:15,268 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-22 12:46:15,268 - INFO - Automação concluída com sucesso.
+2025-08-22 12:47:00,305 - INFO - Iniciando a automação...
+2025-08-22 12:47:00,305 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 12:47:00,305 - INFO - Operação do bot em andamento...
+2025-08-22 12:47:00,306 - INFO - ====== WebDriver manager ======
+2025-08-22 12:47:01,259 - INFO - Get LATEST chromedriver version for google-chrome
+2025-08-22 12:47:01,388 - INFO - Get LATEST chromedriver version for google-chrome
+2025-08-22 12:47:01,510 - INFO - Driver [C:\Users\igor.rocha\.wdm\drivers\chromedriver\win64\139.0.7258.138\chromedriver-win32/chromedriver.exe] found in cache
+2025-08-22 12:47:01,511 - INFO - Using default request storage
+2025-08-22 12:47:01,520 - INFO - Created proxy listening on 127.0.0.1:52286
+2025-08-22 12:47:02,620 - INFO - Capturing request: http://clients2.google.com/time/1/current?cup2key=9:WYhGTPWFamX8bMgknncuXk_45rKCSRDZAmmVWv39hxw&cup2hreq=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+2025-08-22 12:47:02,767 - INFO - Capturing response: http://clients2.google.com/time/1/current?cup2key=9:WYhGTPWFamX8bMgknncuXk_45rKCSRDZAmmVWv39hxw&cup2hreq=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 200 OK
+2025-08-22 12:47:03,005 - INFO - Capturing request: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&laf=b64bin&json=standard
+2025-08-22 12:47:03,135 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL
+2025-08-22 12:47:03,169 - INFO - Capturing response: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&laf=b64bin&json=standard 200 
+2025-08-22 12:47:03,184 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL 200 OK
+2025-08-22 12:47:03,222 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/?type=18
+2025-08-22 12:47:03,246 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=17
+2025-08-22 12:47:03,266 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/?type=18 200 OK
+2025-08-22 12:47:03,280 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/css/bootstrap.min.css
+2025-08-22 12:47:03,311 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=17 200 OK
+2025-08-22 12:47:03,328 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/css/geral.css
+2025-08-22 12:47:03,346 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/css/bootstrap.min.css 200 OK
+2025-08-22 12:47:03,359 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/css/estilo.css
+2025-08-22 12:47:03,384 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/css/geral.css 200 OK
+2025-08-22 12:47:03,394 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/dist/css/main.css
+2025-08-22 12:47:03,427 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/css/estilo.css 200 OK
+2025-08-22 12:47:03,431 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/jquery-3.4.0.js
+2025-08-22 12:47:03,451 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/bootstrap.min.js
+2025-08-22 12:47:03,467 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/json2.min.js
+2025-08-22 12:47:03,478 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/dist/css/main.css 200 OK
+2025-08-22 12:47:03,480 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/jquery.mask.min.js
+2025-08-22 12:47:03,483 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/dist/vue/vendor.js
+2025-08-22 12:47:03,495 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/dist/vue/main.js
+2025-08-22 12:47:03,521 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/json2.min.js 200 OK
+2025-08-22 12:47:03,536 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/jquery.mask.min.js 200 OK
+2025-08-22 12:47:03,554 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/bootstrap.min.js 200 OK
+2025-08-22 12:47:03,649 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/dist/vue/main.js 200 OK
+2025-08-22 12:47:03,720 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/jquery-3.4.0.js 200 OK
+2025-08-22 12:47:03,850 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/dist/vue/vendor.js 200 OK
+2025-08-22 12:47:03,935 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/webMethodNaturezaTransacao
+2025-08-22 12:47:04,003 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/sprite.png
+2025-08-22 12:47:04,007 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/MensagemCadastro.png
+2025-08-22 12:47:04,011 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/exclamacao-aviso.jpg
+2025-08-22 12:47:04,015 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/prefeituraV.png
+2025-08-22 12:47:04,017 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/vaga.svg
+2025-08-22 12:47:04,032 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/webMethodNaturezaTransacao 200 OK
+2025-08-22 12:47:04,051 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/BuscarConfiguracoesAplicacao
+2025-08-22 12:47:04,084 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/MensagemCadastro.png 200 OK
+2025-08-22 12:47:04,089 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/prefeituraV.png 200 OK
+2025-08-22 12:47:04,099 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/vaga.svg 200 OK
+2025-08-22 12:47:04,111 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/exclamacao-aviso.jpg 200 OK
+2025-08-22 12:47:04,138 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/sprite.png 200 OK
+2025-08-22 12:47:04,141 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_bold_macroman/PTS75F-webfont.woff
+2025-08-22 12:47:04,149 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_italic_macroman/PTS56F-webfont.woff
+2025-08-22 12:47:04,155 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/BuscarConfiguracoesAplicacao 200 OK
+2025-08-22 12:47:04,158 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/?type=19
+2025-08-22 12:47:04,160 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/WebMethodBuscarTipoFinanciamento
+2025-08-22 12:47:04,203 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_bold_macroman/PTS75F-webfont.woff 200 OK
+2025-08-22 12:47:04,207 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/?type=19 200 OK
+2025-08-22 12:47:04,214 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_italic_macroman/PTS56F-webfont.woff 200 OK
+2025-08-22 12:47:04,221 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/WebMethodBuscarTipoFinanciamento 200 OK
+2025-08-22 12:47:04,240 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=10
+2025-08-22 12:47:04,324 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=10 200 OK
+2025-08-22 12:47:04,422 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/?type=22
+2025-08-22 12:47:04,438 - INFO - Aceitando cookies...
+2025-08-22 12:47:04,438 - INFO - Procurando elemento com: By.CLASS_NAME = 'cc__button__autorizacao--all'
+2025-08-22 12:47:04,447 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/favicon.ico
+2025-08-22 12:47:04,453 - ERROR - Elemento não encontrado com By.CLASS_NAME = 'cc__button__autorizacao--all'
+2025-08-22 12:47:04,453 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-22 12:47:04,453 - INFO - Automação concluída com sucesso.
+2025-08-22 12:52:41,496 - INFO - Iniciando a automação...
+2025-08-22 12:52:41,496 - INFO - Iniciando o bot de São Paulo...
+2025-08-22 12:52:41,496 - INFO - Operação do bot em andamento...
+2025-08-22 12:52:41,496 - INFO - ====== WebDriver manager ======
+2025-08-22 12:52:42,547 - INFO - Get LATEST chromedriver version for google-chrome
+2025-08-22 12:52:42,680 - INFO - Get LATEST chromedriver version for google-chrome
+2025-08-22 12:52:42,832 - INFO - Driver [C:\Users\igor.rocha\.wdm\drivers\chromedriver\win64\139.0.7258.138\chromedriver-win32/chromedriver.exe] found in cache
+2025-08-22 12:52:42,833 - INFO - Using default request storage
+2025-08-22 12:52:42,833 - INFO - Created proxy listening on 127.0.0.1:53188
+2025-08-22 12:52:43,805 - INFO - Capturing request: http://clients2.google.com/time/1/current?cup2key=9:ob2GlHUuzIZyHoPLr3k4owe816HOHq8kivLxdnLBG6w&cup2hreq=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+2025-08-22 12:52:43,998 - INFO - Capturing response: http://clients2.google.com/time/1/current?cup2key=9:ob2GlHUuzIZyHoPLr3k4owe816HOHq8kivLxdnLBG6w&cup2hreq=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 200 OK
+2025-08-22 12:52:44,295 - INFO - Capturing request: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&laf=b64bin&json=standard
+2025-08-22 12:52:44,632 - INFO - Capturing response: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&laf=b64bin&json=standard 200 
+2025-08-22 12:52:45,198 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL
+2025-08-22 12:52:45,244 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL 200 OK
+2025-08-22 12:52:45,269 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/?type=18
+2025-08-22 12:52:45,305 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=17
+2025-08-22 12:52:45,310 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/?type=18 200 OK
+2025-08-22 12:52:45,318 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/css/bootstrap.min.css
+2025-08-22 12:52:45,375 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/css/bootstrap.min.css 200 OK
+2025-08-22 12:52:45,378 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=17 200 OK
+2025-08-22 12:52:45,393 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/css/geral.css
+2025-08-22 12:52:45,400 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/css/estilo.css
+2025-08-22 12:52:45,439 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/css/geral.css 200 OK
+2025-08-22 12:52:45,451 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/dist/css/main.css
+2025-08-22 12:52:45,464 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/css/estilo.css 200 OK
+2025-08-22 12:52:45,534 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/bootstrap.min.js
+2025-08-22 12:52:45,538 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/json2.min.js
+2025-08-22 12:52:45,542 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/dist/css/main.css 200 OK
+2025-08-22 12:52:45,545 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/jquery-3.4.0.js
+2025-08-22 12:52:45,548 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/js/jquery.mask.min.js
+2025-08-22 12:52:45,551 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/dist/vue/vendor.js
+2025-08-22 12:52:45,555 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/dist/vue/main.js
+2025-08-22 12:52:45,586 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/json2.min.js 200 OK
+2025-08-22 12:52:45,603 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/jquery.mask.min.js 200 OK
+2025-08-22 12:52:45,615 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/bootstrap.min.js 200 OK
+2025-08-22 12:52:45,732 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/dist/vue/main.js 200 OK
+2025-08-22 12:52:45,745 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/js/jquery-3.4.0.js 200 OK
+2025-08-22 12:52:45,877 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/dist/vue/vendor.js 200 OK
+2025-08-22 12:52:46,615 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/webMethodNaturezaTransacao
+2025-08-22 12:52:46,679 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/prefeituraV.png
+2025-08-22 12:52:46,683 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/sprite.png
+2025-08-22 12:52:46,687 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/exclamacao-aviso.jpg
+2025-08-22 12:52:46,693 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/MensagemCadastro.png
+2025-08-22 12:52:46,697 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/images/vaga.svg
+2025-08-22 12:52:46,713 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/webMethodNaturezaTransacao 200 OK
+2025-08-22 12:52:46,724 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/BuscarConfiguracoesAplicacao
+2025-08-22 12:52:46,732 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/prefeituraV.png 200 OK
+2025-08-22 12:52:46,746 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/exclamacao-aviso.jpg 200 OK
+2025-08-22 12:52:46,763 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/vaga.svg 200 OK
+2025-08-22 12:52:46,768 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_bold_macroman/PTS75F-webfont.woff
+2025-08-22 12:52:46,781 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/MensagemCadastro.png 200 OK
+2025-08-22 12:52:46,795 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_italic_macroman/PTS56F-webfont.woff
+2025-08-22 12:52:46,808 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/WebMethodBuscarTipoFinanciamento
+2025-08-22 12:52:46,811 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/BuscarConfiguracoesAplicacao 200 OK
+2025-08-22 12:52:46,817 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/?type=19
+2025-08-22 12:52:46,822 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_bold_macroman/PTS75F-webfont.woff 200 OK
+2025-08-22 12:52:46,851 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/fonts/ptsans_italic_macroman/PTS56F-webfont.woff 200 OK
+2025-08-22 12:52:46,857 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx/WebMethodBuscarTipoFinanciamento 200 OK
+2025-08-22 12:52:46,866 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/?type=19 200 OK
+2025-08-22 12:52:46,891 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/images/sprite.png 200 OK
+2025-08-22 12:52:46,893 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=10
+2025-08-22 12:52:46,969 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab20001b232efb8fb942195288eecafc4dcdfdf4ab10c6ab12748393291b0a4028aaf0?type=10 200 OK
+2025-08-22 12:52:47,085 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/?type=22
+2025-08-22 12:52:47,085 - INFO - Aceitando cookies...
+2025-08-22 12:52:47,095 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/favicon.ico
+2025-08-22 12:52:47,131 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/?type=22 200 OK
+2025-08-22 12:52:47,139 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/favicon.ico 404 Not Found
+2025-08-22 12:52:48,138 - INFO - Capturing request: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab2800ed20b368c0d4f419e94db69962075ab65216378b90eb1866c53b6bd064839438ab4e9a15da4887e9?type=14
+2025-08-22 12:52:48,169 - INFO - Capturing response: https://itbi.prefeitura.sp.gov.br/TSPD/083a958c66ab2800ed20b368c0d4f419e94db69962075ab65216378b90eb1866c53b6bd064839438ab4e9a15da4887e9?type=14 200 OK
+2025-08-22 12:52:57,090 - INFO - Bot de São Paulo concluído com sucesso.
+2025-08-22 12:52:57,090 - INFO - Automação concluída com sucesso.
