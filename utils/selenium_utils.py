@@ -4,8 +4,10 @@ import sys
 import time
 import glob
 import subprocess
-
+import time
 import undetected_chromedriver as uc
+import flask
+import logging
 
 from seleniumwire import webdriver
 from selenium.webdriver.common.by import By
@@ -14,6 +16,56 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import UnexpectedAlertPresentException, NoAlertPresentException, JavascriptException, WebDriverException, TimeoutException, ElementClickInterceptedException, NoSuchElementException, StaleElementReferenceException, ElementNotInteractableException
+
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException, AttributeError
+
+def cookie(driver, locator_type, locator_value):
+    """
+    Encontra um elemento na página com base no tipo e valor do localizador e clica nele.
+
+    Args:
+        driver: A instância do webdriver do Selenium (ex: driver = webdriver.Chrome()).
+        locator_type (str): O tipo de estratégia de busca. Deve corresponder a um atributo
+                            da classe By (ex: "ID", "XPATH", "NAME", "CLASS_NAME").
+                            A função não diferencia maiúsculas de minúsculas.
+        locator_value (str): O valor do localizador a ser encontrado (ex: "user-login",
+                             "//button[@id='submit']").
+    """
+    try:
+        # 1. Converte a string do tipo para o objeto By correspondente (ex: "ID" -> By.ID)
+        # Usamos .upper() para tornar a função case-insensitive (aceita "id", "ID", "Id", etc.)
+        by_strategy = getattr(By, locator_type.upper())
+
+        # 2. Encontra o elemento usando a estratégia e o valor fornecidos
+        print(f"Procurando elemento com: By.{locator_type.upper()} = '{locator_value}'")
+        element = driver.find_element(by_strategy, locator_value)
+        
+        # 3. Clica no elemento encontrado
+        element.click()
+        print("Elemento clicado com sucesso!")
+
+    except AttributeError:
+        # Este erro ocorre se o locator_type for inválido (ex: "COR")
+        print(f"ERRO: Tipo de localizador inválido: '{locator_type}'.")
+        print(f"Tipos válidos são: ID, XPATH, LINK_TEXT, PARTIAL_LINK_TEXT, NAME, TAG_NAME, CLASS_NAME, CSS_SELECTOR")
+    
+    except NoSuchElementException:
+        # Este erro ocorre se o elemento não for encontrado na página
+        print(f"ERRO: Elemento não encontrado com By.{locator_type.upper()} = '{locator_value}'")
+    
+    except Exception as e:
+        # Captura outros erros inesperados durante o clique
+        print(f"ERRO: Ocorreu um problema ao clicar no elemento: {e}")
+    
+def cookies(driver,locator_type,locator_value):
+    try: 
+        driver.find_element(By.{locator_type},f"{locator_value}").click()
+
+    except Exception as e:
+        logging.error(f"Erro em lidar com cookies: {e}")
+        raise e
+
 
 def find_chrome_path():
     """
