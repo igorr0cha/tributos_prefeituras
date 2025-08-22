@@ -1,7 +1,7 @@
 # main.py
 import logging
 import os
-from core.orchestrator import run_automation # <-- MUDANÇA: Importamos o orquestrador
+from bots.sao_paulo import sao_paulo_bot
 
 if not os.path.exists("logs"):
     os.makedirs("logs")
@@ -18,7 +18,7 @@ def main():
     
     try:
         #Lote de procesamento (COLOCAR AQUI QUAIS BOTS SERÃO EXECUTADOS)
-        run_automation("sao_paulo")
+        sao_paulo_bot()
 
         logging.info("Automação concluída com sucesso.")
 
