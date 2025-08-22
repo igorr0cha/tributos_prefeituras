@@ -1,10 +1,7 @@
-# Ponto de entrada: Inicia a automação
-
+# main.py
 import logging
 import os
-import utils as u
-
-from bots.sao_paulo import sao_paulo_bot
+from core.orchestrator import run_automation # <-- MUDANÇA: Importamos o orquestrador
 
 if not os.path.exists("logs"):
     os.makedirs("logs")
@@ -19,11 +16,14 @@ logging.basicConfig(
 def main():
     logging.info("Iniciando a automação...")
     
-    # TESTANDO COM SÃO PAULO
-    sao_paulo_bot()
-    
+    try:
+        #Lote de procesamento (COLOCAR AQUI QUAIS BOTS SERÃO EXECUTADOS)
+        run_automation("sao_paulo")
 
-    logging.info("Automação concluída com sucesso.")
+        logging.info("Automação concluída com sucesso.")
+
+    except Exception as e:
+        logging.error(f"A automação foi encerrada devido a um erro: {e}")
 
 if __name__ == "__main__":
     main()
