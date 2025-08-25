@@ -17,7 +17,7 @@ if not os.path.exists("logs"):
 log_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
 # Handler para o arquivo
-file_handler = logging.FileHandler('ui/logs/automation.log', mode='a')
+file_handler = logging.FileHandler('logs/automation.log', mode='a')
 file_handler.setFormatter(log_formatter)
 
 # Handler para a interface (Customizado)

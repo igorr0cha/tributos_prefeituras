@@ -17,16 +17,6 @@ chrome_options.add_argument("--disable-software-rasterizer")
 chrome_options.add_argument("--disable-webgl")
 # FIM --------------------------------------
 
-def verifica_cookie(driver):
-    try:
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CLASS_NAME, "cc__button__autorizacao--all"))
-        )
-        logging.info("Cookie encontrado.")
-        return True
-    except TimeoutException:
-        logging.warning("Cookie não encontrado.")
-        return False
 
 def sao_paulo_bot():
 
@@ -40,9 +30,17 @@ def sao_paulo_bot():
 
         logging.info("Aceitando cookies...")
 
-        # u.cookie_accept(driver,"CLASS_NAME","cc__button__autorizacao--all")
+        u.cookie_accept(driver,"CLASS_NAME","cc__button__autorizacao--all")
 
-        time.sleep(10) 
+        logging.info("scrollando ate input de cadastro")
+        u.scroll_to_element("//*[@id='pnlTela1']/div/fieldset[1]/div/div[2]/input", driver)
+        
+        xpath_cadastro = "//input[@aria-labelledby='lblCadastroImovel']"
+        driver.find_element(By.XPATH, xpath_cadastro).click()
+
+        u.fill_input(driver.find_element(By.XPATH, xpath_cadastro), "Texto de exemplo 123", driver)
+        time.sleep(10)
+
     except Exception as e:
         logging.error(f"Erro no bot de São Paulo: {e}")
 
@@ -50,3 +48,6 @@ def sao_paulo_bot():
         # Garante que o driver seja fechado mesmo se ocorrer um erro
         if driver:
             driver.quit()
+
+
+            
