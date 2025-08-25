@@ -39,10 +39,10 @@ def sao_paulo_bot():
         driver = u.getDriver("https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/")
 
         logging.info("Aceitando cookies...")
-        
-        u.cookie_accept(driver,"CLASS_NAME","cc__button__autorizacao--all")
 
-        
+        # u.cookie_accept(driver,"CLASS_NAME","cc__button__autorizacao--all")
+
+        time.sleep(10) 
     except Exception as e:
         logging.error(f"Erro no bot de São Paulo: {e}")
 
