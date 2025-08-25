@@ -27,12 +27,10 @@ from selenium.common.exceptions import NoSuchElementException
 def cookie_accept(driver, locator_type, locator_value):
     """
     Encontra um elemento na página com base no tipo e valor do localizador e clica nele.
-    ... (sua docstring continua a mesma) ...
     """
     try:
         by_strategy = getattr(By, locator_type.upper())
 
-        # Usando logging.info para mensagens de progresso
         logging.info(f"Procurando elemento com: By.{locator_type.upper()} = '{locator_value}'")
         element = driver.find_element(by_strategy, locator_value)
         
@@ -44,7 +42,7 @@ def cookie_accept(driver, locator_type, locator_value):
         logging.error(f"Tipos válidos são: ID, XPATH, LINK_TEXT, PARTIAL_LINK_TEXT, NAME, TAG_NAME, CLASS_NAME, CSS_SELECTOR")
     
     except NoSuchElementException:
-        logging.error(f"Elemento não encontrado com By.{locator_type.upper()} = '{locator_value}'")
+        logging.info("Botão de cookies não encontrado, seguindo automação normalmente.")
     
     except Exception as e:
         logging.error(f"Ocorreu um problema ao clicar no elemento: {e}")
