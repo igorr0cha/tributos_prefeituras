@@ -30,8 +30,8 @@ FORMULARIO_LOCATORS = {
     # Seção: Dados da Transação
     "transacao_valor_total": '//*[@id="pnlTela1"]/div/fieldset[4]/div/div[1]/input',
     "transacao_tipo_financiamento_select": '//*[@id="txtTipoFinanciamento"]',
-    "transacao_totalidade_sim_radio": '//*[@id="divTransmissaoTotalidade"]/span[1]/label', # Ajustado para o label do "SIM"
-    "transacao_totalidade_nao_radio": '//*[@id="divTransmissaoTotalidade"]/span[2]/label', # Ajustado para o label do "NÃO"
+    "transacao_totalidade_sim_radio": '//*[@id="divTransmissaoTotalidade"]/span[1]/label', # label do "SIM"
+    "transacao_totalidade_nao_radio": '//*[@id="divTransmissaoTotalidade"]/span[2]/label', # label do "NÃO"
     "transacao_tipo_instrumento_particular_radio": '//*[@id="divTipoInstrumento"]/span[1]/label',
     "transacao_tipo_instrumento_escritura_radio": '//*[@id="divTipoInstrumento"]/span[2]/label',
     "transacao_cartorio_select": '//*[@id="DdlCartorioRegistroImovel"]',
@@ -40,34 +40,66 @@ FORMULARIO_LOCATORS = {
 # ------------------------------------
 
 def preencher_dados_imovel(driver, dados: dict):
-    """Preenche o cadastro do imóvel e aguarda o preenchimento automático."""
     logging.info("Preenchendo cadastro do imóvel para auto-completar...")
-    # Usamos uma função mais específica aqui para enviar o Enter
-    campo_cadastro = u.get_element(FORMULARIO_LOCATORS["imovel_cadastro"], driver)
-    campo_cadastro.clear()
-    campo_cadastro.send_keys(dados.get("cadastro_imovel") + Keys.ENTER)
-    time.sleep(2) # Pausa para o site processar e preencher os outros campos
+
+    cadastro_imovel = u.scroll_to_element(FORMULARIO_LOCATORS["imovel_cadastro"], driver)
+    cadastro_imovel.clear()
+
+    valor = dados.get("cadastro_imovel")
+    if valor:
+        cadastro_imovel.send_keys(str(valor))
+        logging.info("apertou o botão e deu enter")
+        time.sleep(1)  # Pausa para processar e preencher valores
+        cadastro_imovel.send_keys(Keys.ENTER)
+        time.sleep(100)
+
+        campos_essenciais = {
+            "cep": '//*[@id="pnlTela1"]/div/fieldset[1]/div/div[3]/input',
+            "logradouro": '//*[@id="pnlTela1"]/div/fieldset[1]/div/div[4]/input',
+            "numero": '//*[@id="pnlTela1"]/div/fieldset[1]/div/div[5]/input'
+        }
+
+        for nome, xpath in campos_essenciais.items():
+            elemento = u.scroll_to_element(xpath, driver)
+            valor_atual = elemento.get_attribute("value")
+            if not valor_atual:
+                logging.warning(f"Atenção: O campo '{nome}' não foi preenchido automaticamente. Verifique o cadastro do imóvel.")
+                raise Exception(f"Campo obrigatório '{nome}' não foi preenchido automaticamente!")
+
+        logging.info("Campos essenciais preenchidos com sucesso: ")
+    else:
+        logging.error("Cadastro do imóvel não informado!")
+        raise Exception("Cadastro do imóvel não informado!")
+
 
 def preencher_pessoas(driver, tipo_pessoa: str, pessoas: list):
-    """
-    Preenche dinamicamente os dados de compradores ou vendedores.
-    'tipo_pessoa' deve ser 'comprador' ou 'vendedor'.
-    """
-    logging.info(f"Preenchendo dados para: {tipo_pessoa}(s).")
     for i, pessoa in enumerate(pessoas):
-        if i > 0: # Se for a segunda pessoa em diante, clica para adicionar novo campo
+        logging.info(f"Preenchendo dados para {tipo_pessoa} {i+1}:")
+        if i > 0:
             u.click_button(FORMULARIO_LOCATORS[f"{tipo_pessoa}_adicionar_btn"], driver)
-            time.sleep(1)
+            time.sleep(2)
 
-        # Preenche apenas o CPF/CNPJ e envia Enter para auto-completar o nome
-        # Assumindo que os XPaths para múltiplos são os mesmos, senão precisarão de ajuste
-        campo_cpf_cnpj = u.get_element(FORMULARIO_LOCATORS[f"{tipo_pessoa}_cpf_cnpj"], driver)
+        campo_cpf_cnpj = u.scroll_to_element(FORMULARIO_LOCATORS[f"{tipo_pessoa}_cpf_cnpj"], driver)
         campo_cpf_cnpj.clear()
-        campo_cpf_cnpj.send_keys(pessoa.get("cpf_cnpj") + Keys.ENTER)
-        time.sleep(1) # Pausa para o site buscar o nome
+        cpf_cnpj_valor = pessoa.get("cpf_cnpj")
+        u.fill_input(FORMULARIO_LOCATORS[f"{tipo_pessoa}_cpf_cnpj"], cpf_cnpj_valor, driver)
+        time.sleep(2)  # Aguarda preenchimento automático
+
+        # Verifica se o nome foi preenchido automaticamente
+        nome_xpath = f'//*[@id="fdsComprador"]/div[1]/div[2]/div/div/input' if tipo_pessoa == "comprador" else f'//*[@id="fdsVendedor"]/div[1]/div[2]/div/div/input'
+        campo_nome = u.scroll_to_element(nome_xpath, driver)
+        nome_valor = campo_nome.get_attribute("value")
+
+        if not nome_valor:
+            logging.info(f"Nome não preenchido automaticamente para {tipo_pessoa} {i+1}. Inserindo manualmente.")
+            nome_manual = pessoa.get("nome") or "NOME_MANUAL"
+            campo_nome.send_keys(nome_manual)
+        else:
+            logging.info(f"Nome preenchido automaticamente para {tipo_pessoa} {i+1}: {nome_valor}")
+
 
 def preencher_dados_transacao(driver, dados: dict):
-    """Preenche a seção de Dados da Transação."""
+    
     logging.info("Preenchendo dados da transação...")
     u.fill_input(FORMULARIO_LOCATORS["transacao_valor_total"], dados.get("valor_total"), driver)
     u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], dados.get("tipo_financiamento"), driver)
@@ -95,7 +127,7 @@ def sao_paulo_bot():
         # --- ESTRUTURA DE DADOS SIMPLIFICADA ---
         dados_completos_itbi = {
             "imovel": {
-                "cadastro_imovel": "008.030.0051-1" # Exemplo de cadastro real
+                "cadastro_imovel": "07007800610" # Exemplo de cadastro real
             },
             "compradores": [
                 {"cpf_cnpj": "111.111.111-11"} # Só precisamos do CPF
