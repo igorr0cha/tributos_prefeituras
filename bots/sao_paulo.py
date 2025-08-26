@@ -41,35 +41,41 @@ FORMULARIO_LOCATORS = {
 
 def preencher_dados_imovel(driver, dados: dict):
     logging.info("Preenchendo cadastro do imóvel para auto-completar...")
-
-    cadastro_imovel = u.scroll_to_element(FORMULARIO_LOCATORS["imovel_cadastro"], driver)
-    cadastro_imovel.clear()
-
+    
     valor = dados.get("cadastro_imovel")
-    if valor:
-        cadastro_imovel.send_keys(str(valor))
-        logging.info("apertou o botão e deu enter")
-        time.sleep(1)  # Pausa para processar e preencher valores
-        cadastro_imovel.send_keys(Keys.ENTER)
-        time.sleep(100)
-
-        campos_essenciais = {
-            "cep": '//*[@id="pnlTela1"]/div/fieldset[1]/div/div[3]/input',
-            "logradouro": '//*[@id="pnlTela1"]/div/fieldset[1]/div/div[4]/input',
-            "numero": '//*[@id="pnlTela1"]/div/fieldset[1]/div/div[5]/input'
-        }
-
-        for nome, xpath in campos_essenciais.items():
-            elemento = u.scroll_to_element(xpath, driver)
-            valor_atual = elemento.get_attribute("value")
-            if not valor_atual:
-                logging.warning(f"Atenção: O campo '{nome}' não foi preenchido automaticamente. Verifique o cadastro do imóvel.")
-                raise Exception(f"Campo obrigatório '{nome}' não foi preenchido automaticamente!")
-
-        logging.info("Campos essenciais preenchidos com sucesso: ")
-    else:
+    if not valor:
         logging.error("Cadastro do imóvel não informado!")
         raise Exception("Cadastro do imóvel não informado!")
+
+    # Passo 1: Focar e preencher o campo
+    campo_cadastro = u.scroll_to_element(FORMULARIO_LOCATORS["imovel_cadastro"], driver)
+    campo_cadastro.clear()
+    campo_cadastro.send_keys(str(valor))
+    
+    # Passo 2: Simular o "blur" (perder o foco), que é um gatilho comum
+    driver.execute_script("arguments[0].blur();", campo_cadastro)
+    time.sleep(1) # Pequena pausa para o JS reagir
+
+    # Passo 3: Enviar a tecla TAB para mover para o próximo campo, um gatilho ainda mais robusto
+    campo_cadastro.send_keys(Keys.TAB)
+    logging.info(f"Valor '{valor}' inserido e TAB pressionado para acionar o preenchimento.")
+    
+    # Passo 4: Esperar explicitamente até que um dos campos seja preenchido
+    time.sleep(100) # Aumentar a espera se a rede for lenta
+
+    # Passo 5: Verificar se o preenchimento automático funcionou
+    campos_a_verificar = {
+        "cep": '//*[@id="pnlTela1"]/div/fieldset[1]/div/div[3]/input',
+        "logradouro": '//*[@id="txtEnderecoImovel"]',
+    }
+    for nome, xpath in campos_a_verificar.items():
+        elemento = u.get_element(xpath, driver)
+        valor_do_campo = elemento.get_attribute("value")
+        if not valor_do_campo:
+            logging.warning(f"Atenção: O campo '{nome}' não foi preenchido automaticamente.")
+            raise Exception(f"Falha no preenchimento automático para o campo '{nome}'.")
+    
+    logging.info("Campos de endereço preenchidos automaticamente com sucesso.")
 
 
 def preencher_pessoas(driver, tipo_pessoa: str, pessoas: list):
@@ -145,17 +151,24 @@ def sao_paulo_bot():
             }
         }
 
-        driver = u.getDriver("https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/")
+        driver = u.getDriverUndetectable("https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/")
+        u.wait_for_page_load(driver)
 
         logging.info("Aceitando cookies...")
-        u.cookie_accept(driver, "CLASS_NAME", "cc__button__autorizacao--all")
-        
-        # --- ORQUESTRAÇÃO DO PREENCHIMENTO ---
+        u.cookie_accept(driver, "XPATH", '//*[@id="modalPanelAtencao"]/div[2]/div/div[2]/div/div/input[1]')
+        u.wait_for_page_load(driver)
+
+        # ------------- ORQUESTRAÇÃO DO PREENCHIMENTO -------------
+
+        # imovel
         preencher_dados_imovel(driver, dados_completos_itbi["imovel"])
+
+        # pessoas
         preencher_pessoas(driver, "comprador", dados_completos_itbi["compradores"])
         preencher_pessoas(driver, "vendedor", dados_completos_itbi["vendedores"])
+
+        # transacao
         preencher_dados_transacao(driver, dados_completos_itbi["transacao"])
-        # ------------------------------------
 
         logging.info("Formulário preenchido. Pausa para verificação.")
         time.sleep(15)

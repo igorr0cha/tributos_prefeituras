@@ -11,7 +11,6 @@ import logging
 
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
-import undetected_chromedriver as uc
 
 from seleniumwire import webdriver
 from selenium.webdriver.common.by import By
@@ -32,6 +31,9 @@ def cookie_accept(driver, locator_type, locator_value):
         by_strategy = getattr(By, locator_type.upper())
 
         logging.info(f"Procurando elemento com: By.{locator_type.upper()} = '{locator_value}'")
+        wait_for_element_to_load(driver, by_strategy, locator_value)
+        wait_for_element_visibility(driver, by_strategy, locator_value)
+        
         element = driver.find_element(by_strategy, locator_value)
         
         element.click()
@@ -237,6 +239,49 @@ def find_chromedriver_path():
             )
     else:
         raise Exception(f"Sistema operacional não suportado: {sistema}")
+
+def getDriverUndetectable(url: str, headless: bool = False):
+    """
+    Inicializa um WebDriver do Chrome INDETECTÁVEL que gerencia o driver
+    automaticamente para contornar sistemas anti-bot.
+
+    Args:
+        url (str): A URL inicial para o navegador abrir.
+        headless (bool): Se True, executa o navegador em modo invisível.
+
+    Returns:
+        uc.Chrome: A instância do driver do Chrome indetectável.
+    """
+    logging.info("Configurando o ChromeDriver no modo indetectável...")
+
+    options = uc.ChromeOptions()
+    
+    # Opções para tornar a automação mais estável e parecida com um humano
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-notifications")
+    options.add_argument("--lang=pt-BR,pt") # Garante o idioma português
+    options.add_argument("--start-maximized")
+
+    if headless:
+        options.add_argument('--headless=new')
+
+    # A mágica acontece aqui:
+    # 1. uc.Chrome() cria um navegador "camuflado".
+    # 2. ChromeDriverManager().install() baixa e fornece o caminho do driver correto.
+    driver = uc.Chrome(
+        options=options,
+        driver_executable_path=ChromeDriverManager().install()
+    )
+
+    # Camada extra de proteção: remove a flag 'webdriver' que o Selenium cria
+    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+    driver.maximize_window()
+
+    logging.info(f"Navegando para: {url}")
+    driver.get(url)
+    
+    return driver
 
 def getDriver(url, headless=False, extensions=None):
     """
