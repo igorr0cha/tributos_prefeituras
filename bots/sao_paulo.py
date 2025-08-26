@@ -6,6 +6,8 @@ import utils.selenium_utils as u
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys # Importa a classe Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # --- CONFIGURAÇÕES DO CHROME ---
 chrome_options = Options()
@@ -60,8 +62,16 @@ def preencher_dados_imovel(driver, dados: dict):
     campo_cadastro.send_keys(Keys.TAB)
     logging.info(f"Valor '{valor}' inserido e TAB pressionado para acionar o preenchimento.")
     
-    # Passo 4: Esperar explicitamente até que um dos campos seja preenchido
-    time.sleep(100) # Aumentar a espera se a rede for lenta
+    # Passo 4: Esperar explicitamente pelo preenchimento de um dos campos
+    try:
+        WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="pnlTela1"]/div/fieldset[1]/div/div[3]/input[string-length(@value) > 0]'))
+        )
+        logging.info("Preenchimento automático detectado.")
+    except Exception:
+        logging.warning("O campo CEP não foi preenchido automaticamente após 15 segundos.")
+        raise Exception("Falha no preenchimento automático do CEP.")
+
 
     # Passo 5: Verificar se o preenchimento automático funcionou
     campos_a_verificar = {

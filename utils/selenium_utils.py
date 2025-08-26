@@ -23,7 +23,9 @@ from selenium.common.exceptions import UnexpectedAlertPresentException, NoAlertP
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
-def cookie_accept(driver, locator_type, locator_value):
+# utils/selenium_utils.py
+
+def cookie_accept(driver, locator_type, locator_value, timeout=10):
     """
     Encontra um elemento na página com base no tipo e valor do localizador e clica nele.
     """
@@ -31,10 +33,12 @@ def cookie_accept(driver, locator_type, locator_value):
         by_strategy = getattr(By, locator_type.upper())
 
         logging.info(f"Procurando elemento com: By.{locator_type.upper()} = '{locator_value}'")
-        wait_for_element_to_load(driver, by_strategy, locator_value)
-        wait_for_element_visibility(driver, by_strategy, locator_value)
         
-        element = driver.find_element(by_strategy, locator_value)
+        # Correção: Usar WebDriverWait diretamente para maior flexibilidade
+        wait = WebDriverWait(driver, timeout)
+        element = wait.until(EC.presence_of_element_located((by_strategy, locator_value)))
+        wait.until(EC.visibility_of(element))
+        wait.until(EC.element_to_be_clickable(element))
         
         element.click()
         logging.info("Elemento clicado com sucesso!")
