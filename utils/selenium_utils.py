@@ -465,12 +465,12 @@ def fill_input(xpath, valor, driver, timeout=10):
         driver: O driver do selenium
         timeout: Tempo máximo de espera
     """
-    if valor != "None":
+    if valor is not None:
         wait_for_page_load(driver, timeout)
         element = get_element(xpath, driver, timeout)
         element.clear()
-        element.send_keys(Keys.HOME + valor)
-
+        element.send_keys(Keys.HOME + str(valor))
+        
 def click_button(xpath, driver, timeout=10):
     """
     Clica em um botão.
