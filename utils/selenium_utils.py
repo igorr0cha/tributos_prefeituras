@@ -287,6 +287,58 @@ def getDriverUndetectable(url: str, headless: bool = False):
     
     return driver
 
+def getDriverUndetectableLocal(url: str, headless: bool = False):
+    """
+    Inicializa um WebDriver do Chrome INDETECTÁVEL que utiliza drivers locais
+    para uma inicialização rápida, contornando sistemas anti-bot.
+
+    Args:
+        url (str): A URL inicial para o navegador abrir.
+        headless (bool): Se True, executa o navegador em modo invisível.
+
+    Returns:
+        uc.Chrome: A instância do driver do Chrome indetectável.
+    """
+    logging.info("Configurando o ChromeDriver no modo indetectável com driver local...")
+
+    options = uc.ChromeOptions()
+    
+    # Opções para tornar a automação mais estável e parecida com um humano
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-notifications")
+    options.add_argument("--lang=pt-BR,pt") # Garante o idioma português
+    options.add_argument("--start-maximized")
+
+    if headless:
+        options.add_argument('--headless=new')
+        
+    # --- Otimização ---
+    # Encontra os caminhos do Chrome e do ChromeDriver localmente
+    chrome_path = find_chrome_path()
+    driver_path = find_chromedriver_path()
+
+    if not driver_path or not os.path.exists(driver_path):
+        logging.error("ChromeDriver não encontrado localmente. Execute o script com conexão à internet uma vez para baixá-lo.")
+        raise FileNotFoundError(f"ChromeDriver não encontrado no caminho: {driver_path}")
+
+    logging.info(f"Usando ChromeDriver local em: {driver_path}")
+
+    driver = uc.Chrome(
+        options=options,
+        browser_executable_path=chrome_path,  # Aponta para a instalação do Chrome
+        driver_executable_path=driver_path    # Aponta para o driver local
+    )
+
+    # Camada extra de proteção: remove a flag 'webdriver' que o Selenium cria
+    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+    driver.maximize_window()
+
+    logging.info(f"Navegando para: {url}")
+    driver.get(url)
+    
+    return driver
+
 def getDriver(url, headless=False, extensions=None):
     """
     Inicializa e configura o WebDriver do Chrome usando webdriver-manager.

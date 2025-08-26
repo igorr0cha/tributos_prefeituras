@@ -161,11 +161,11 @@ def sao_paulo_bot():
             }
         }
 
-        driver = u.getDriverUndetectable("https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/")
+        driver = u.getDriverUndetectableLocal("https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/")
         u.wait_for_page_load(driver)
 
         logging.info("Aceitando cookies...")
-        u.cookie_accept(driver, "XPATH", '//*[@id="modalPanelAtencao"]/div[2]/div/div[2]/div/div/input[1]')
+        u.cookie_accept(driver, "CLASS_NAME", "cc__button__autorizacao--all")
         u.wait_for_page_load(driver)
 
         # ------------- ORQUESTRAÇÃO DO PREENCHIMENTO -------------
