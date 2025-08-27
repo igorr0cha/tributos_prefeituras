@@ -135,12 +135,21 @@ def preencher_dados_transacao(driver, dados: dict):
     u.fill_input(FORMULARIO_LOCATORS["transacao_matricula"], dados.get("matricula"), driver)
 
 
+# todo: realizar aceitação de cookies
+def sp_cookies(driver):
+    logging.info("Aceitando cookies...")
+    u.cookie_accept(driver)      
+       
+
+
 def sao_paulo_bot():
     """Função principal que orquestra a automação."""
+
     logging.info("Iniciando o bot de São Paulo...")
-    driver = None
+    driver = None # inicializa driver vazio para evitar inconsistências
     try:
-        # --- ESTRUTURA DE DADOS SIMPLIFICADA ---
+        # teste com dados HARDCODE
+        # TODO: criar função para receber dados do SGI (consultando view)
         dados_completos_itbi = {
             "imovel": {
                 "cadastro_imovel": "07007800610" # Exemplo de cadastro real
@@ -164,17 +173,9 @@ def sao_paulo_bot():
         driver = u.getDriverUndetectableLocal("https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/")
         u.wait_for_page_load(driver)
 
-        logging.info("Aceitando cookies...")
-        # Tenta com o seletor específico
-        cookie_clicked = u.cookie_accept(driver, "CLASS_NAME", "cc__button__autorizacao--all", timeout=20)
-        if not cookie_clicked:
-            # Tenta com XPATH alternativo
-            cookie_clicked = u.cookie_accept(driver, "XPATH", "//button[contains(@class, 'cc__button') and contains(text(), 'Aceitar')]", timeout=10)
-            if not cookie_clicked:
-                logging.warning("Não foi possível clicar no botão de cookies. Continuando mesmo assim...")
-        u.wait_for_page_load(driver)
-
-        # -------- ORQUESTRAÇÃO DO PREENCHIMENTO
+        sp_cookies(driver)
+        
+# -------- ORQUESTRAÇÃO DO PREENCHIMENTO
 
         # imovel
         preencher_dados_imovel(driver, dados_completos_itbi["imovel"])
