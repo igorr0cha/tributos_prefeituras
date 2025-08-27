@@ -40,6 +40,28 @@ FORMULARIO_LOCATORS = {
     "transacao_matricula": '//*[@id="txtMatricula"]'
 }
 # ------------------------------------
+# Funções secundárias da perfeitura de SAO PAULO
+
+def sp_cookie_accept(driver):
+    try:
+        wait = WebDriverWait(driver, 15)
+        
+        seletor_do_host = "prodamsp-componente-consentimento"
+        
+        host = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, seletor_do_host)))
+
+        shadow_root = host.shadow_root
+
+        seletor_do_botao = "input[value='Autorizo o uso de todos os cookies e estou de acordo com a política de privacidade.']"
+        botao_cookies = shadow_root.find_element(By.CSS_SELECTOR, seletor_do_botao)
+
+        botao_cookies.click()
+        logging.info("Botão dentro do Shadow DOM foi clicado com sucesso!")
+
+    except Exception as e:
+        logging.error(f"Não foi possível encontrar ou clicar no elemento dentro do Shadow DOM.")
+        logging.error(f"Erro: {e}")
+
 
 def preencher_dados_imovel(driver, dados: dict):
     logging.info("Preenchendo cadastro do imóvel para auto-completar...")
@@ -135,25 +157,6 @@ def preencher_dados_transacao(driver, dados: dict):
     u.fill_input(FORMULARIO_LOCATORS["transacao_matricula"], dados.get("matricula"), driver)
 
 
-def sp_cookie_accept(driver):
-    try:
-        wait = WebDriverWait(driver, 15)
-        
-        seletor_do_host = "prodamsp-componente-consentimento"
-        
-        host = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, seletor_do_host)))
-
-        shadow_root = host.shadow_root
-
-        seletor_do_botao = "input[value='Autorizo o uso de todos os cookies e estou de acordo com a política de privacidade.']"
-        botao_cookies = shadow_root.find_element(By.CSS_SELECTOR, seletor_do_botao)
-
-        botao_cookies.click()
-        logging.info("Botão dentro do Shadow DOM foi clicado com sucesso!")
-
-    except Exception as e:
-        logging.error(f"Não foi possível encontrar ou clicar no elemento dentro do Shadow DOM.")
-        logging.error(f"Erro: {e}")
 
 
 def sao_paulo_bot():
@@ -184,7 +187,7 @@ def sao_paulo_bot():
             }
         }
 
-        driver = u.getDriverUndetectableLocal("https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/")
+        driver = u.getDriverUndetectableLocal("https://itbi.prefeitura.sp.gov.br")
         u.wait_for_page_load(driver)
 
         sp_cookie_accept(driver)
