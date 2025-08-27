@@ -165,10 +165,16 @@ def sao_paulo_bot():
         u.wait_for_page_load(driver)
 
         logging.info("Aceitando cookies...")
-        u.cookie_accept(driver, "CLASS_NAME", "cc__button__autorizacao--all")
+        # Tenta com o seletor específico
+        cookie_clicked = u.cookie_accept(driver, "CLASS_NAME", "cc__button__autorizacao--all", timeout=20)
+        if not cookie_clicked:
+            # Tenta com XPATH alternativo
+            cookie_clicked = u.cookie_accept(driver, "XPATH", "//button[contains(@class, 'cc__button') and contains(text(), 'Aceitar')]", timeout=10)
+            if not cookie_clicked:
+                logging.warning("Não foi possível clicar no botão de cookies. Continuando mesmo assim...")
         u.wait_for_page_load(driver)
 
-        # ------------- ORQUESTRAÇÃO DO PREENCHIMENTO -------------
+        # -------- ORQUESTRAÇÃO DO PREENCHIMENTO
 
         # imovel
         preencher_dados_imovel(driver, dados_completos_itbi["imovel"])

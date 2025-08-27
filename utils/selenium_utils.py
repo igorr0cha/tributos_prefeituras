@@ -23,35 +23,99 @@ from selenium.common.exceptions import UnexpectedAlertPresentException, NoAlertP
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
-# utils/selenium_utils.py
-
-def cookie_accept(driver, locator_type, locator_value, timeout=10):
+def cookie_accept(driver, locator_type, locator_value, timeout=30):
     """
     Encontra um elemento na página com base no tipo e valor do localizador e clica nele.
+    Implementação mais robusta para lidar com cookies e popups.
     """
     try:
-        by_strategy = getattr(By, locator_type.upper())
-
-        logging.info(f"Procurando elemento com: By.{locator_type.upper()} = '{locator_value}'")
+        logging.info(f"Procurando elemento de cookie com: By.{locator_type.upper()} = '{locator_value}'")
         
-        # Correção: Usar WebDriverWait diretamente para maior flexibilidade
-        wait = WebDriverWait(driver, timeout)
-        element = wait.until(EC.presence_of_element_located((by_strategy, locator_value)))
-        wait.until(EC.visibility_of(element))
-        wait.until(EC.element_to_be_clickable(element))
+        # Primeiro, espera a página carregar completamente
+        wait_for_page_load(driver, timeout)
         
-        element.click()
-        logging.info("Elemento clicado com sucesso!")
+        # Tenta algumas abordagens diferentes para encontrar o botão de cookie
+        try:
+            # Tenta encontrar usando o seletor original
+            by_strategy = getattr(By, locator_type.upper())
+            wait = WebDriverWait(driver, timeout)
+            element = wait.until(EC.element_to_be_clickable((by_strategy, locator_value)))
+            
+            # Tenta rolar até o elemento para garantir que está visível
+            driver.execute_script("arguments[0].scrollIntoView(true);", element)
+            time.sleep(1)
+            
+            # Tenta clicar via JavaScript (mais confiável para popups)
+            driver.execute_script("arguments[0].click();", element)
+            logging.info("Botão de cookies clicado com sucesso via JavaScript!")
+            return True
+            
+        except Exception as e:
+            logging.warning(f"Primeira tentativa falhou: {e}")
+            
+            # Segunda tentativa: procurar por qualquer botão que possa ser de cookie
+            try:
+                # Procura por botões comuns de aceitação de cookies
+                common_selectors = [
+                    (By.XPATH, "//button[contains(., 'Accept') or contains(., 'Aceitar') or contains(., 'Agree')]"),
+                    (By.XPATH, "//a[contains(., 'Accept') or contains(., 'Aceitar') or contains(., 'Agree')]"),
+                    (By.ID, "cookieAccept"),
+                    (By.ID, "acceptCookies"),
+                    (By.CLASS_NAME, "cookie-accept"),
+                    (By.CLASS_NAME, "accept-cookies"),
+                    (By.XPATH, '//*[@id="modalPanelAtencao"]/div[2]/div/div[2]/div/div/input[1]'),
+                ]
+                
+                for selector in common_selectors:
+                    try:
+                        element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable(selector))
+                        driver.execute_script("arguments[0].click();", element)
+                        logging.info(f"Botão de cookies encontrado com seletor alternativo: {selector}")
+                        return True
+                    except:
+                        continue
+                        
+                logging.info("Nenhum botão de cookies encontrado com seletores alternativos.")
+            except:
+                pass
+                
+            # Terceira tentativa: procurar por iframes que possam conter o botão de cookies
+            try:
+                iframes = driver.find_elements(By.TAG_NAME, "iframe")
+                # Certifique-se de que by_strategy está definido
+                try:
+                    by_strategy = getattr(By, locator_type.upper())
+                except Exception as e:
+                    logging.error(f"Tipo de localizador inválido dentro do iframe: '{locator_type}'. Erro: {e}")
+                    by_strategy = By.XPATH  # fallback para evitar erro
 
+                for iframe in iframes:
+                    try:
+                        driver.switch_to.frame(iframe)
+                        element = driver.find_element(by_strategy, locator_value)
+                        driver.execute_script("arguments[0].click();", element)
+                        driver.switch_to.default_content()
+                        logging.info("Botão de cookies encontrado dentro de um iframe e clicado.")
+                        return True
+                    except:
+                        driver.switch_to.default_content()
+                        continue
+            except:
+                pass
+
+            # Se chegou aqui, não encontrou o botão
+            logging.info("Botão de cookies não encontrado após várias tentativas. Continuando...")
+            return False
+            
     except AttributeError:
         logging.error(f"Tipo de localizador inválido: '{locator_type}'.")
-        logging.error(f"Tipos válidos são: ID, XPATH, LINK_TEXT, PARTIAL_LINK_TEXT, NAME, TAG_NAME, CLASS_NAME, CSS_SELECTOR")
-    
-    except NoSuchElementException:
-        logging.info("Botão de cookies não encontrado, seguindo automação normalmente.")
+        logging.error("Tipos válidos são: ID, XPATH, LINK_TEXT, PARTIAL_LINK_TEXT, NAME, TAG_NAME, CLASS_NAME, CSS_SELECTOR")
+        return False
     
     except Exception as e:
-        logging.error(f"Ocorreu um problema ao clicar no elemento: {e}")
+        logging.error(f"Ocorreu um problema ao tentar clicar no elemento de cookies: {e}")
+        # Continue a execução mesmo se o botão de cookies não for clicado
+        return False
 
 def find_chrome_path():
     """
