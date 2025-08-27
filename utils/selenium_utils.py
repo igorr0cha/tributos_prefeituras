@@ -23,25 +23,6 @@ from selenium.common.exceptions import UnexpectedAlertPresentException, NoAlertP
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
-def cookie_accept(driver):
-    try:
-        wait = WebDriverWait(driver, 15)
-        
-        seletor_do_host = "prodamsp-componente-consentimento"
-        
-        host = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, seletor_do_host)))
-
-        shadow_root = host.shadow_root
-
-        seletor_do_botao = "input[value='Autorizo o uso de todos os cookies e estou de acordo com a política de privacidade.']"
-        botao_cookies = shadow_root.find_element(By.CSS_SELECTOR, seletor_do_botao)
-
-        botao_cookies.click()
-        print("Botão dentro do Shadow DOM foi clicado com sucesso!")
-
-    except Exception as e:
-        print(f"Não foi possível encontrar ou clicar no elemento dentro do Shadow DOM.")
-
 def find_chrome_path():
     """
     Encontra o caminho do executável do Google Chrome de acordo com o sistema operacional.
