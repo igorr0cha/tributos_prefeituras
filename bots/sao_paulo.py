@@ -30,14 +30,18 @@ FORMULARIO_LOCATORS = {
 
     # Seção: Dados da Transação
     "transacao_valor_total": '//*[@id="pnlTela1"]/div/fieldset[4]/div/div[1]/input',
-    "transacao_tipo_financiamento_select": '//*[@id="txtTipoFinanciamento"]',
-    "transacao_totalidade_sim_radio": '//*[@id="divTransmissaoTotalidade"]/span[1]/label', # label do "SIM"
-    "transacao_totalidade_nao_radio": '//*[@id="divTransmissaoTotalidade"]/span[2]/label', # label do "NÃO"
+
+    "transacao_tipo_financiamento_select": '//*[@id="cboTpFinan"]',
+
+    "transacao_totalidade_sim_radio": '//*[@id="lblTransmissaoTotalidade"]', # label do "SIM"
+    "transacao_totalidade_nao_radio": '//*[@id="rdlTotalidadeNao"]', # label do "NÃO"
+
     "transacao_tipo_instrumento_particular_radio": '//*[@id="divTipoInstrumento"]/span[1]/label',
     "transacao_tipo_instrumento_escritura_radio": '//*[@id="divTipoInstrumento"]/span[2]/label',
+
     "transacao_cartorio_select": '//*[@id="DdlCartorioRegistroImovel"]',
     "transacao_matricula": '//*[@id="txtMatricula"]'
-}
+} 
 # ------------------------------------
 # Funções secundárias da perfeitura de SAO PAULO
 
@@ -143,14 +147,16 @@ def preencher_dados_transacao(driver, dados: dict):
     
     logging.info("Preenchendo dados da transação...")
     u.fill_input(FORMULARIO_LOCATORS["transacao_valor_total"], dados.get("valor_total"), driver)
+
     u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], dados.get("tipo_financiamento"), driver)
 
-    # Lógica para botões de rádio
+    # Lógica para totalidade do imóvel
     if dados.get("transmite_totalidade"):
         u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_sim_radio"], driver)
     else:
         u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_nao_radio"], driver)
 
+    # Lógica para tipo de instrumento
     if dados.get("tipo_instrumento") == "ESCRITURA_PUBLICA":
         u.click_button(FORMULARIO_LOCATORS["transacao_tipo_instrumento_escritura_radio"], driver)
     else: # Assume "INSTRUMENTO_PARTICULAR" como padrão
@@ -184,7 +190,7 @@ def sao_paulo_bot():
             ],
             "transacao": {
                 "valor_total": "500000,00",
-                "tipo_financiamento": "Sistema Financeiro da Habitação (SFH)",
+                "tipo_financiamento": "Sistema Financeiro de Habitação",
                 "transmite_totalidade": True, # True para Sim, False para Não
                 "tipo_instrumento": "ESCRITURA_PUBLICA", # "ESCRITURA_PUBLICA" ou "INSTRUMENTO_PARTICULAR"
                 "cartorio_registro": "1º Oficial de Registro de Imóveis",
