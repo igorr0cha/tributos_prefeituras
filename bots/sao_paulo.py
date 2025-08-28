@@ -32,6 +32,8 @@ FORMULARIO_LOCATORS = {
     "transacao_valor_total": '//*[@id="pnlTela1"]/div/fieldset[4]/div/div[1]/input',
 
     "transacao_tipo_financiamento_select": '//*[@id="cboTpFinan"]',
+    "transacao_valor_financiamento": '//*[@id="txt_valor_financiado"]',
+    "aviso_financiamento": '/html/body/div[3]/div',
 
     "transacao_totalidade_sim_radio": '//*[@id="lblTransmissaoTotalidade"]', # label do "SIM"
     "transacao_totalidade_nao_radio": '//*[@id="rdlTotalidadeNao"]', # label do "NÃO"
@@ -148,20 +150,32 @@ def preencher_dados_transacao(driver, dados: dict):
     logging.info("Preenchendo dados da transação...")
     u.fill_input(FORMULARIO_LOCATORS["transacao_valor_total"], dados.get("valor_total"), driver)
 
-    u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], dados.get("tipo_financiamento"), driver)
+    # Verifica se é financiado:
+    if dados.get("financiado"):
+        u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], dados.get("tipo_financiamento"), driver)
+        # verifica se abre um pop-up:
+        time.sleep(1) 
+        if u.element_exists(FORMULARIO_LOCATORS["financiado"], driver):
+            driver.send_keys(Keys.ESCAPE)   
+            # time.sleep(1) # TODO: Verificar necessidade de pausa
+            logging.info("pop-up financiamento vencido com sucesso.")
 
-    # Lógica para totalidade do imóvel
+            u.fill_input(FORMULARIO_LOCATORS["transacao_valor_financiamento"], dados.get("valor_financiamento"), driver)
+            logging.info("Preenchendo valor financiado")
+
+    # Totalidade do imóvel
     if dados.get("transmite_totalidade"):
-        u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_sim_radio"], driver)
+        u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_sim_radio"], driver)   
     else:
         u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_nao_radio"], driver)
 
-    # Lógica para tipo de instrumento
+    # Tipo de instrumento
     if dados.get("tipo_instrumento") == "ESCRITURA_PUBLICA":
         u.click_button(FORMULARIO_LOCATORS["transacao_tipo_instrumento_escritura_radio"], driver)
     else: # Assume "INSTRUMENTO_PARTICULAR" como padrão
         u.click_button(FORMULARIO_LOCATORS["transacao_tipo_instrumento_particular_radio"], driver)
 
+    # Lógica para matrícula/transcrição do cartório de registro
     u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_cartorio_select"], dados.get("cartorio_registro"), driver)
     u.fill_input(FORMULARIO_LOCATORS["transacao_matricula"], dados.get("matricula"), driver)
 
@@ -183,17 +197,19 @@ def sao_paulo_bot():
                 "cadastro_imovel": "07007800610" # Exemplo de cadastro real
             },
             "compradores": [
-                {"cpf_cnpj": "111.111.111-11"} # Só precisamos do CPF
+                {"cpf_cnpj": "75517361315"} # Só precisamos do CPF
             ],
             "vendedores": [
-                {"cpf_cnpj": "222.222.222-22"} # Só precisamos do CPF/CNPJ
+                {"cpf_cnpj": "00360305000104"} # Só precisamos do CPF/CNPJ
             ],
             "transacao": {
-                "valor_total": "500000,00",
-                "tipo_financiamento": "Sistema Financeiro de Habitação",
+                "valor_total": "200000", # valor/preço TOTAL da transação
+                "financiado": True, # True para Sim, False para Não
+                "tipo_financiamento": "Sistema Financeiro de Habitação", # Opções válidas (SOMENTE): "Sistema Financeiro de Habitação" ou "Minha Casa Minha Vida" ou "Consórcio" ou "SFI, Carteira Hipotecária, etc"
+                "valor_financiamento": "150000", # valor FINANCIADO (NÃO é o VALOR TOTAL)
                 "transmite_totalidade": True, # True para Sim, False para Não
-                "tipo_instrumento": "ESCRITURA_PUBLICA", # "ESCRITURA_PUBLICA" ou "INSTRUMENTO_PARTICULAR"
-                "cartorio_registro": "1º Oficial de Registro de Imóveis",
+                "tipo_instrumento": "ESCRITURA_PUBLICA", # Opções válidas (SOMENTE): "ESCRITURA_PUBLICA" ou "INSTRUMENTO_PARTICULAR"
+                "cartorio_registro": "1º Oficial de Registro de Imóveis", # Opções válidas (SOMENTE): "1º Cartório de Registro de Imóvel", "2º ..." e assim por diante, até o 18º. 
                 "matricula": "98765"
             }
         }
