@@ -31,7 +31,7 @@ FORMULARIO_LOCATORS = {
     # Seção: Dados da Transação
     "transacao_valor_total": '//*[@id="pnlTela1"]/div/fieldset[4]/div/div[1]/input',
 
-    "transacao_tipo_financiamento_select": '//*[@id="cboTpFinan"]',
+    "transacao_tipo_financiamento_select": '//*[@id="cboTpFinan"]', # TODO: VERIFICAR ESSE CAMINHO
     "transacao_valor_financiamento": '//*[@id="txt_valor_financiado"]',
     "aviso_financiamento": '/html/body/div[3]/div',
 
@@ -152,16 +152,29 @@ def preencher_dados_transacao(driver, dados: dict):
 
     # Verifica se é financiado:
     if dados.get("financiado"):
-        u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], dados.get("tipo_financiamento"), driver)
-        # verifica se abre um pop-up:
-        time.sleep(1) 
-        if u.element_exists(FORMULARIO_LOCATORS["financiado"], driver):
-            driver.send_keys(Keys.ESCAPE)   
-            # time.sleep(1) # TODO: Verificar necessidade de pausa
-            logging.info("pop-up financiamento vencido com sucesso.")
+        try:    
+            logging.info("Transação é financiada. Preenchendo detalhes do financiamento...")
 
+            u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], dados.get("tipo_financiamento"), driver)
+
+            if not "tipo_financiamento" in dados:
+                logging.warning("Tipo de financiamento não especificado. Ou não foi preenchido corretamente.")
+                return
+            
+            time.sleep(1) 
+            
+            # verifica se abre um pop-up:
+            if u.element_exists(FORMULARIO_LOCATORS["financiado"], driver):
+                driver.send_keys(Keys.ESCAPE)   
+                # time.sleep(1) # TODO: Verificar necessidade de pausa
+                logging.info("pop-up financiamento vencido com sucesso.")
+
+            ## Preenche o valor financiado
             u.fill_input(FORMULARIO_LOCATORS["transacao_valor_financiamento"], dados.get("valor_financiamento"), driver)
-            logging.info("Preenchendo valor financiado")
+            logging.info("Preenchido valor financiado.")
+
+        except Exception as e:
+            logging.error(f"Erro ao preencher valor financiado: {e}")
 
     # Totalidade do imóvel
     if dados.get("transmite_totalidade"):
@@ -197,10 +210,10 @@ def sao_paulo_bot():
                 "cadastro_imovel": "07007800610" # Exemplo de cadastro real
             },
             "compradores": [
-                {"cpf_cnpj": "75517361315"} # Só precisamos do CPF
+                {"cpf_cnpj": "755.173.613-15"} # Só precisamos do CPF
             ],
             "vendedores": [
-                {"cpf_cnpj": "00360305000104"} # Só precisamos do CPF/CNPJ
+                {"cpf_cnpj": "003.603.050-01"} # Só precisamos do CPF/CNPJ
             ],
             "transacao": {
                 "valor_total": "200000", # valor/preço TOTAL da transação
@@ -214,7 +227,7 @@ def sao_paulo_bot():
             }
         }
 
-        driver = u.getDriverUndetectableLocal("https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/")
+        driver = u.getDriverUndetectableLocal("https://itbi.prefeitura.sp.gov.br")
         u.wait_for_page_load(driver)
 
         sp_cookie_accept(driver)
