@@ -9,6 +9,8 @@ import undetected_chromedriver as uc
 import flask
 import logging
 
+import random #biblioteca para recarregar
+
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -22,6 +24,31 @@ from selenium.common.exceptions import UnexpectedAlertPresentException, NoAlertP
 
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+
+def recarregar_como_humano(driver):
+    """
+    Recarrega a página simulando a tecla F5 para parecer mais humano.
+    """
+    try:
+        # Encontra o corpo da página para enviar a tecla
+        body = driver.find_element(By.TAG_NAME, 'body')
+        
+        # Pausa aleatória antes de agir
+        time.sleep(random.uniform(0.5, 1.5)) 
+        
+        # Envia a tecla F5
+        body.send_keys(Keys.F5)
+        
+        print("Página recarregada com a tecla F5.")
+        
+        # Espera o carregamento da página após o refresh
+        wait_for_page_load(driver) # Usando sua função de selenium_utils.py
+
+    except Exception as e:
+        print(f"Erro ao tentar recarregar a página como humano: {e}")
+        # Fallback para o método padrão se a simulação de tecla falhar
+        driver.refresh()
+        wait_for_page_load(driver)
 
 def find_chrome_path():
     """

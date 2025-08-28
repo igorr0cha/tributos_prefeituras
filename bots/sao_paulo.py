@@ -43,7 +43,7 @@ FORMULARIO_LOCATORS = {
 
 def sp_cookie_accept(driver):
     try:
-        wait = WebDriverWait(driver, 15)
+        wait = WebDriverWait(driver, 25)
         
         seletor_do_host = "prodamsp-componente-consentimento"
         
@@ -54,55 +54,51 @@ def sp_cookie_accept(driver):
         seletor_do_botao = "input[value='Autorizo o uso de todos os cookies e estou de acordo com a política de privacidade.']"
         botao_cookies = shadow_root.find_element(By.CSS_SELECTOR, seletor_do_botao)
         time.sleep(2)
-        botao_cookies.click()
+
+        try:
+            driver.execute_script("arguments[0].click();", botao_cookies)
+        except Exception as e:
+            botao_cookies.click()
+
         logging.info("Botão dentro do Shadow DOM foi clicado com sucesso!")
 
     except Exception as e:
         logging.error(f"Não foi possível encontrar ou clicar no elemento dentro do Shadow DOM.")
         logging.error(f"Erro: {e}")
 
-
 def preencher_dados_imovel(driver, dados: dict):
     logging.info("Preenchendo cadastro do imóvel para auto-completar...")
-
-    valor = dados.get(str("cadastro_imovel"))
+    
+    valor = dados.get("cadastro_imovel")
     if not valor:
         logging.error("Cadastro do imóvel não informado!")
         raise Exception("Cadastro do imóvel não informado!")
 
-    # Passo 1: Focar e preencher o campo + da enter
-
-    # campo_cadastro = u.scroll_to_element(FORMULARIO_LOCATORS["imovel_cadastro"], driver)
-    campo_cadastro = u.wait_for_element_to_load(FORMULARIO_LOCATORS["imovel_cadastro"], driver)
-
-    driver.execute_script(
-        "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});",
-        campo_cadastro,
-    )
-    time.sleep(0.5)
-   
-    campo_cadastro.click()
-    time.sleep(1)
-
+    # Passo 1: Focar e preencher o campo
+    campo_cadastro = u.scroll_to_element(FORMULARIO_LOCATORS["imovel_cadastro"], driver)
     campo_cadastro.clear()
-    time.sleep(1)   
+    campo_cadastro.send_keys(str(valor))
+    
+    # Passo 2: Simular o "blur" (perder o foco), que é um gatilho comum
+    driver.execute_script("arguments[0].blur();", campo_cadastro)
+    time.sleep(1) # Pequena pausa para o JS reagir
 
-    campo_cadastro.send_keys(str(valor) + Keys.TAB)
-    time.sleep(200) # TODO: tempo para debugar
-
-    # Passo 2: Esperar explicitamente pelo preenchimento de um dos campos
+    # Passo 3: Enviar a tecla TAB para mover para o próximo campo, um gatilho ainda mais robusto
+    campo_cadastro.send_keys(Keys.TAB)
+    logging.info(f"Valor '{valor}' inserido e TAB pressionado para acionar o preenchimento.")
+    
+    # Passo 4: Esperar explicitamente pelo preenchimento de um dos campos
     try:
         WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.XPATH, '//*[@id="pnlTela1"]/div/fieldset[1]/div/div[3]/input'))
         )
         logging.info("Preenchimento automático detectado.")
-
     except Exception:
         logging.warning("O campo CEP não foi preenchido automaticamente após 15 segundos.")
         raise Exception("Falha no preenchimento automático do CEP.")
 
 
-    # Passo 4: Verificar se o preenchimento automático funcionou
+    # Passo 5: Verificar se o preenchimento automático funcionou
     campos_a_verificar = {
         "cep": '//*[@id="pnlTela1"]/div/fieldset[1]/div/div[3]/input',
         "logradouro": '//*[@id="txtEnderecoImovel"]',
@@ -200,8 +196,8 @@ def sao_paulo_bot():
         u.wait_for_page_load(driver)
 
         sp_cookie_accept(driver)
-        
-# -------- ORQUESTRAÇÃO DO PREENCHIMENTO
+
+        # -------- ORQUESTRAÇÃO DO PREENCHIMENTO
 
         # imovel
         preencher_dados_imovel(driver, dados_completos_itbi["imovel"])
