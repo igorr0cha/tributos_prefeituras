@@ -148,33 +148,62 @@ def preencher_pessoas(driver, tipo_pessoa: str, pessoas: list):
 def preencher_dados_transacao(driver, dados: dict):
     
     logging.info("Preenchendo dados da transação...")
+    
+    # Valor total da transação
     u.fill_input(FORMULARIO_LOCATORS["transacao_valor_total"], dados.get("valor_total"), driver)
+
+    # Navega para o campo de tipo de financiamento
+    u.scroll_to_element(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], driver)
 
     # Verifica se é financiado:
     if dados.get("financiado"):
         try:    
             logging.info("Transação é financiada. Preenchendo detalhes do financiamento...")
 
-            u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], dados.get("tipo_financiamento"), driver)
+            # 1. Clica no dropdown para abrir as opções
+            u.click_button(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], driver)
+            time.sleep(1) # Pausa para a interface renderizar as opções
 
-            if not "tipo_financiamento" in dados:
-                logging.warning("Tipo de financiamento não especificado. Ou não foi preenchido corretamente.")
-                return
-            
-            time.sleep(1) 
-            
-            # verifica se abre um pop-up:
-            if u.element_exists(FORMULARIO_LOCATORS["financiado"], driver):
-                driver.send_keys(Keys.ESCAPE)   
-                # time.sleep(1) # TODO: Verificar necessidade de pausa
-                logging.info("pop-up financiamento vencido com sucesso.")
+            # 2. Encontra e clica na opção correta pelo texto
+            tipo_financiamento_desejado = dados.get("tipo_financiamento")
+            if not tipo_financiamento_desejado:
+                raise ValueError("O 'tipo_financiamento' não foi fornecido nos dados.")
 
-            ## Preenche o valor financiado
-            u.fill_input(FORMULARIO_LOCATORS["transacao_valor_financiamento"], dados.get("valor_financiamento"), driver)
-            logging.info("Preenchido valor financiado.")
+            xpath_opcoes = "//select[@id='cboTpFinan']/option"
+            opcao_encontrada = False
+            for option in driver.find_elements(By.XPATH, xpath_opcoes):
+                if option.text.strip() == tipo_financiamento_desejado:
+                    option.click()
+                    time.sleep(1)
+
+                    body = driver.find_element(By.TAG_NAME, 'body')
+                    body.send_keys(Keys.ESCAPE)  
+
+                    logging.info(f"Opção '{tipo_financiamento_desejado}' selecionada.")
+                    opcao_encontrada = True
+                    break
+            
+            if not opcao_encontrada:
+                raise Exception(f"A opção de financiamento '{tipo_financiamento_desejado}' não foi encontrada.")
+
+            # 3. Aguarda o campo de valor financiado aparecer
+            logging.info("Aguardando o campo de valor financiado aparecer...")
+
+            valor_financiado_xpath = FORMULARIO_LOCATORS["transacao_valor_financiamento"]
+            WebDriverWait(driver, 10).until(
+                EC.visibility_of_element_located((By.XPATH, valor_financiado_xpath))
+            )
+            
+            # 4. Preenche o campo de valor financiado
+            valor_a_preencher = dados.get("valor_financiamento")
+            u.fill_input(valor_financiado_xpath, valor_a_preencher, driver)
+            logging.info("Valor do financiamento preenchido com sucesso.")
 
         except Exception as e:
-            logging.error(f"Erro ao preencher valor financiado: {e}")
+            logging.error(f"Falha ao preencher os dados do financiamento: {e}")
+            raise # Interrompe o bot se esta etapa crítica falhar
+
+
 
     # Totalidade do imóvel
     if dados.get("transmite_totalidade"):
@@ -191,8 +220,6 @@ def preencher_dados_transacao(driver, dados: dict):
     # Lógica para matrícula/transcrição do cartório de registro
     u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_cartorio_select"], dados.get("cartorio_registro"), driver)
     u.fill_input(FORMULARIO_LOCATORS["transacao_matricula"], dados.get("matricula"), driver)
-
-
 
 
 def sao_paulo_bot():
@@ -218,7 +245,7 @@ def sao_paulo_bot():
             "transacao": {
                 "valor_total": "200000", # valor/preço TOTAL da transação
                 "financiado": True, # True para Sim, False para Não
-                "tipo_financiamento": "Sistema Financeiro de Habitação", # Opções válidas (SOMENTE): "Sistema Financeiro de Habitação" ou "Minha Casa Minha Vida" ou "Consórcio" ou "SFI, Carteira Hipotecária, etc"
+                "tipo_financiamento": "Sistema Financeiro de Habitação", # Opções válidas (SOMENTE): "Sistema Financeiro de Habitação" ou "Minha Casa Minha Vida" ou "Consórcio" ou "SFI, Carteira Hipotecária, etc", "NULL"
                 "valor_financiamento": "150000", # valor FINANCIADO (NÃO é o VALOR TOTAL)
                 "transmite_totalidade": True, # True para Sim, False para Não
                 "tipo_instrumento": "ESCRITURA_PUBLICA", # Opções válidas (SOMENTE): "ESCRITURA_PUBLICA" ou "INSTRUMENTO_PARTICULAR"

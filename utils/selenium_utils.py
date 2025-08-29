@@ -868,4 +868,41 @@ def wait_for_page_load_and_check_session(driver, log_signal, processamento_id, s
         # PADRÃO: Reporta o erro de timeout.
         log_signal.emit(f"ERRO [Proc. #{processamento_id}]: A página ({driver.current_url}) não carregou em {timeout} segundos.")
         raise TimeoutException(f"A página não carregou em {timeout}s.")
-#________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+## ADICIONAL:
+
+def selecionar_opcao_com_verificacao(driver, xpath_opcao, xpath_elemento_condicional, timeout=5):
+    """
+    Seleciona uma opção e verifica se um elemento condicional aparece.
+    
+    Args:
+        driver: WebDriver do Selenium
+        xpath_opcao: XPath da opção a ser clicada
+        xpath_elemento_condicional: XPath do elemento que deve aparecer após o clique (opcional)
+        timeout: Tempo máximo de espera pelo elemento condicional
+    
+    Returns:
+        bool: True se o elemento condicional apareceu, False caso contrário
+    """
+    try:
+        click_button(xpath_opcao, driver)
+        logging.info(f"Botão de selecionar Tipo de Financiamento clicado.")
+        time.sleep(1)  
+    except Exception as e:
+        logging.error(f"Erro ao clicar no botão: {e}")
+
+    # verificando se elemento condicional aparece:
+
+    xpath_elemento_condicional_aparece = element_exists(xpath_elemento_condicional, driver, timeout=2)
+
+    # Campo de valor do financiamento ENCONTRADO:
+ 
+    if xpath_elemento_condicional_aparece:
+        logging.info(f"Campo de valor do financiamento ENCONTRADO!")
+        return True
+
+    # Campo de valor do financiamento NÃO ENCONTRADO:
+
+    logging.warning(f"Elemento condicional {xpath_elemento_condicional} não existe! ")
+
+    return False
