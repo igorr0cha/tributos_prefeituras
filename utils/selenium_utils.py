@@ -312,6 +312,7 @@ def getDriverUndetectableLocal(url: str, headless: bool = False):
         
     # --- Otimização ---
     # Encontra os caminhos do Chrome e do ChromeDriver localmente
+
     chrome_path = find_chrome_path()
     driver_path = find_chromedriver_path()
 

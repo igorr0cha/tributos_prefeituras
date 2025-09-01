@@ -8,6 +8,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys # Importa a classe Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 # --- CONFIGURAÇÕES DO CHROME ---
 chrome_options = Options()
@@ -33,7 +34,9 @@ FORMULARIO_LOCATORS = {
 
     "transacao_tipo_financiamento_select": '//*[@id="cboTpFinan"]', # TODO: VERIFICAR ESSE CAMINHO
     "transacao_valor_financiamento": '//*[@id="txt_valor_financiado"]',
+
     "aviso_financiamento": '/html/body/div[3]/div',
+    "botao_aviso_financiamento": "//button[contains(@class, 'swal2-confirm')]", # class
 
     "transacao_totalidade_sim_radio": '//*[@id="lblTransmissaoTotalidade"]', # label do "SIM"
     "transacao_totalidade_nao_radio": '//*[@id="rdlTotalidadeNao"]', # label do "NÃO"
@@ -173,11 +176,13 @@ def preencher_dados_transacao(driver, dados: dict):
             opcao_encontrada = False
             for option in driver.find_elements(By.XPATH, xpath_opcoes):
                 if option.text.strip() == tipo_financiamento_desejado:
+                    time.sleep(1)
                     option.click()
                     time.sleep(1)
 
-                    body = driver.find_element(By.TAG_NAME, 'body')
-                    body.send_keys(Keys.ESCAPE)  
+                    sp_close_aviso_financiamento(driver)
+                    time.sleep(1)
+
 
                     logging.info(f"Opção '{tipo_financiamento_desejado}' selecionada.")
                     opcao_encontrada = True
@@ -220,6 +225,33 @@ def preencher_dados_transacao(driver, dados: dict):
     # Lógica para matrícula/transcrição do cartório de registro
     u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_cartorio_select"], dados.get("cartorio_registro"), driver)
     u.fill_input(FORMULARIO_LOCATORS["transacao_matricula"], dados.get("matricula"), driver)
+
+def sp_close_aviso_financiamento(driver):
+    """
+    Aguarda e fecha o popup de "Informação Sobre Financiamento" se ele aparecer.
+    """
+    try:
+        # Espera o botão "OK" do popup ficar clicável por até 5 segundos.
+        # O seletor é baseado na classe do botão de confirmação do SweetAlert.
+        ok_button_xpath = FORMULARIO_LOCATORS["botao_aviso_financiamento"]
+        
+        wait = WebDriverWait(driver, 5)
+        botao_ok = wait.until(EC.element_to_be_clickable((By.XPATH, ok_button_xpath)))
+        
+        logging.info("Popup de aviso de financiamento encontrado. Clicando em 'OK'.")
+        botao_ok.click()
+        
+        # Aguarda o popup desaparecer para garantir que a ação foi concluída
+        wait.until(EC.invisibility_of_element_located((By.XPATH, ok_button_xpath)))
+        logging.info("Popup de aviso fechado com sucesso.")
+
+    except TimeoutException:
+        # Se o popup não aparecer em 5 segundos, apenas informa e continua.
+        logging.info("Nenhum popup de aviso de financiamento apareceu, continuando a execução.")
+    except Exception as e:
+        # Captura outros erros inesperados ao tentar fechar o popup.
+        logging.error(f"Erro inesperado ao tentar fechar o aviso de financiamento: {e}")
+
 
 
 def sao_paulo_bot():
