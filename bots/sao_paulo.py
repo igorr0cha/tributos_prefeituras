@@ -9,6 +9,8 @@ from selenium.webdriver.common.keys import Keys # Importa a classe Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import Select # lida com dropdowns
+
 
 # --- CONFIGURAÇÕES DO CHROME ---
 chrome_options = Options()
@@ -163,33 +165,34 @@ def preencher_dados_transacao(driver, dados: dict):
         try:    
             logging.info("Transação é financiada. Preenchendo detalhes do financiamento...")
 
-            # 1. Clica no dropdown para abrir as opções
-            u.click_button(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], driver)
-            time.sleep(1) # Pausa para a interface renderizar as opções
-
-            # 2. Encontra e clica na opção correta pelo texto
             tipo_financiamento_desejado = dados.get("tipo_financiamento")
             if not tipo_financiamento_desejado:
                 raise ValueError("O 'tipo_financiamento' não foi fornecido nos dados.")
-
-            xpath_opcoes = "//select[@id='cboTpFinan']/option"
-            opcao_encontrada = False
-            for option in driver.find_elements(By.XPATH, xpath_opcoes):
-                if option.text.strip() == tipo_financiamento_desejado:
-                    time.sleep(1)
-                    option.click()
-                    time.sleep(1)
-
-                    sp_close_aviso_financiamento(driver)
-                    time.sleep(1)
-
-
-                    logging.info(f"Opção '{tipo_financiamento_desejado}' selecionada.")
-                    opcao_encontrada = True
-                    break
             
-            if not opcao_encontrada:
-                raise Exception(f"A opção de financiamento '{tipo_financiamento_desejado}' não foi encontrada.")
+            # 1. Clica no dropdown para abrir as opções
+            xpath_dropdown = FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"]
+            u.click_button(xpath_dropdown, driver)
+            time.sleep(1)
+
+            # 2. Seleciona a opção usando a classe Select (forma correta e robusta)
+            try:
+                # Encontra o elemento <select>
+                dropdown_element = u.get_element(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], driver)
+                
+                # Cria um objeto Select
+                select_object = Select(dropdown_element)
+                
+                # Seleciona a opção pelo texto visível, o que dispara os eventos JS
+                select_object.select_by_visible_text(tipo_financiamento_desejado)
+                
+                logging.info(f"Opção '{tipo_financiamento_desejado}' selecionada com sucesso.")
+
+            except Exception as e:
+                logging.error(f"Não foi possível selecionar a opção '{tipo_financiamento_desejado}'. Erro: {e}")
+                raise Exception(f"Opção de financiamento '{tipo_financiamento_desejado}' não encontrada ou não selecionável.")
+
+            # Lida com o popup de aviso que pode aparecer
+            sp_close_aviso_financiamento(driver)
 
             # 3. Aguarda o campo de valor financiado aparecer
             logging.info("Aguardando o campo de valor financiado aparecer...")
@@ -272,7 +275,7 @@ def sao_paulo_bot():
                 {"cpf_cnpj": "755.173.613-15"} # Só precisamos do CPF
             ],
             "vendedores": [
-                {"cpf_cnpj": "003.603.050-01"} # Só precisamos do CPF/CNPJ
+                {"cpf_cnpj": "00.360.305/0010-40"} # Só precisamos do CPF/CNPJ
             ],
             "transacao": {
                 "valor_total": "200000", # valor/preço TOTAL da transação
