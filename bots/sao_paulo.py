@@ -91,15 +91,15 @@ def preencher_dados_imovel(driver, dados: dict):
     campo_cadastro.send_keys(str(valor))
     
     # Passo 2: Simular o "blur" (perder o foco), que é um gatilho comum
-    driver.execute_script("arguments[0].blur();", campo_cadastro)
-    time.sleep(1) # Pequena pausa para o JS reagir
+    #driver.execute_script("arguments[0].blur();", campo_cadastro)
+    #time.sleep(1) # Pequena pausa para o JS reagir
 
     # Passo 3: Enviar a tecla TAB para mover para o próximo campo, um gatilho ainda mais robusto
     campo_cadastro.send_keys(Keys.TAB)
     logging.info(f"Valor '{valor}' inserido e TAB pressionado para acionar o preenchimento.")
     
     # Passo 4: Esperar explicitamente pelo preenchimento de um dos campos
-    try:
+    try: 
         WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.XPATH, '//*[@id="pnlTela1"]/div/fieldset[1]/div/div[3]/input'))
         )
@@ -129,13 +129,13 @@ def preencher_pessoas(driver, tipo_pessoa: str, pessoas: list):
         logging.info(f"Preenchendo dados para {tipo_pessoa} {i+1}:")
         if i > 0:
             u.click_button(FORMULARIO_LOCATORS[f"{tipo_pessoa}_adicionar_btn"], driver)
-            time.sleep(2)
+            # time.sleep(2) # TODO: VERIFICAR TEMPO
 
         campo_cpf_cnpj = u.scroll_to_element(FORMULARIO_LOCATORS[f"{tipo_pessoa}_cpf_cnpj"], driver)
         campo_cpf_cnpj.clear()
         cpf_cnpj_valor = pessoa.get("cpf_cnpj")
         u.fill_input(FORMULARIO_LOCATORS[f"{tipo_pessoa}_cpf_cnpj"], cpf_cnpj_valor, driver)
-        time.sleep(2)  # Aguarda preenchimento automático
+        # time.sleep(1)  # TODO: VERIFICAR TEMPO
 
         # Verifica se o nome foi preenchido automaticamente
         nome_xpath = f'//*[@id="fdsComprador"]/div[1]/div[2]/div/div/input' if tipo_pessoa == "comprador" else f'//*[@id="fdsVendedor"]/div[1]/div[2]/div/div/input'
@@ -289,7 +289,7 @@ def sao_paulo_bot():
             }
         }
 
-        driver = u.getDriverUndetectableLocal("https://itbi.prefeitura.sp.gov.br")
+        driver = u.getDriverUndetectableLocal("https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/")
         u.wait_for_page_load(driver)
 
         sp_cookie_accept(driver)
