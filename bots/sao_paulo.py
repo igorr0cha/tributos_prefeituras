@@ -169,47 +169,59 @@ def preencher_dados_transacao(driver, dados: dict):
             if not tipo_financiamento_desejado:
                 raise ValueError("O 'tipo_financiamento' não foi fornecido nos dados.")
             
-            # 1. Clica no dropdown para abrir as opções
-            xpath_dropdown = FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"]
-            u.click_button(xpath_dropdown, driver)
-            time.sleep(1)
-
-            # 2. Seleciona a opção usando a classe Select (forma correta e robusta)
+            # --- ABORDAGEM ROBUSTA PARA VUE.JS ---
             try:
-                # Encontra o elemento <select>
+                logging.info(f"Tentando selecionar a opção '{tipo_financiamento_desejado}' simulando clique humano.")
+                
+                # Passo 1: Clicar no dropdown para abrir as opções
                 dropdown_element = u.get_element(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], driver)
+                dropdown_element.click()
                 
-                # Cria um objeto Select
-                select_object = Select(dropdown_element)
+                # Pausa curta para garantir que as opções foram renderizadas pelo JS
+                time.sleep(0.5)
+
+                # Passo 2: Localizar e clicar diretamente na <option> desejada pelo texto
+                option_xpath = f"//option[normalize-space()='{tipo_financiamento_desejado}']"
+                option_element = WebDriverWait(driver, 5).until(
+                    EC.element_to_be_clickable((By.XPATH, option_xpath))
+                )
+                option_element.click()
                 
-                # Seleciona a opção pelo texto visível, o que dispara os eventos JS
-                select_object.select_by_visible_text(tipo_financiamento_desejado)
-                
-                logging.info(f"Opção '{tipo_financiamento_desejado}' selecionada com sucesso.")
+                logging.info("Clique direto na <option> realizado com sucesso.")
 
             except Exception as e:
-                logging.error(f"Não foi possível selecionar a opção '{tipo_financiamento_desejado}'. Erro: {e}")
-                raise Exception(f"Opção de financiamento '{tipo_financiamento_desejado}' não encontrada ou não selecionável.")
+                logging.error(f"Falha ao tentar simular o clique humano. Erro: {e}")
+                # Se a simulação de clique falhar, você pode manter sua tentativa com a classe Select como fallback.
+                logging.info("Tentando método alternativo com a classe Select.")
+                select_object = Select(u.get_element(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], driver))
+                select_object.select_by_visible_text(tipo_financiamento_desejado)
+                logging.info("Método alternativo com a classe Select concluído.")
 
-            # Lida com o popup de aviso que pode aparecer
+            # Lida com o popup de aviso que pode aparecer após a seleção
             sp_close_aviso_financiamento(driver)
 
-            # 3. Aguarda o campo de valor financiado aparecer
-            logging.info("Aguardando o campo de valor financiado aparecer...")
+            # Aguarda o campo de valor financiado ficar VISÍVEL (essa é a chave!)
+            logging.info("Aguardando o campo 'Valor Financiado' se tornar visível...")
 
+            
             valor_financiado_xpath = FORMULARIO_LOCATORS["transacao_valor_financiamento"]
+            
             WebDriverWait(driver, 10).until(
                 EC.visibility_of_element_located((By.XPATH, valor_financiado_xpath))
             )
+            logging.info("Campo 'Valor Financiado' está visível.")
             
-            # 4. Preenche o campo de valor financiado
+            # Preenche o campo de valor financiado
             valor_a_preencher = dados.get("valor_financiamento")
             u.fill_input(valor_financiado_xpath, valor_a_preencher, driver)
             logging.info("Valor do financiamento preenchido com sucesso.")
 
+        except TimeoutException:
+            logging.error("O campo 'Valor Financiado' não ficou visível após 10 segundos.")
+            raise Exception("Falha ao aguardar a aparição do campo de valor financiado.")
         except Exception as e:
             logging.error(f"Falha ao preencher os dados do financiamento: {e}")
-            raise # Interrompe o bot se esta etapa crítica falhar
+            raise
 
 
 
