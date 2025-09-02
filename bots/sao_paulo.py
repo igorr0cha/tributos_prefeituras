@@ -36,10 +36,10 @@ FORMULARIO_LOCATORS = {
 
     "transacao_tipo_financiamento_select": '//*[@id="cboTpFinan"]', # TODO: VERIFICAR ESSE CAMINHO
     "transacao_valor_financiamento": '//*[@id="txt_valor_financiado"]',
-
     "aviso_financiamento": '/html/body/div[3]/div',
     "botao_aviso_financiamento": "//button[contains(@class, 'swal2-confirm')]", # class
 
+    "transacao_proporcao_transmitida_input": '//*[@id="divTotalidade"]/input', # input que so aparece se marcado como NÃO
     "transacao_totalidade_sim_radio": '//*[@id="lblTransmissaoTotalidade"]', # label do "SIM"
     "transacao_totalidade_nao_radio": '//*[@id="rdlTotalidadeNao"]', # label do "NÃO"
 
@@ -158,11 +158,11 @@ def preencher_pessoas(driver, tipo_pessoa: str, pessoas: list):
 def preencher_dados_transacao(driver, dados: dict):
     
     logging.info("Preenchendo dados da transação...")
-    
-    # Valor total da transação
+
+    # valor total da transação -----------------------------
     u.fill_input(FORMULARIO_LOCATORS["transacao_valor_total"], dados.get("valor_total"), driver)
 
-    # Verifica se a transação é financiada
+    # Verifica se a transação é financiada -----------------------------
     if dados.get("financiado"):
         try:    
             logging.info("Transação financiada. Modificando estado do componente Vue via JavaScript.")
@@ -265,12 +265,46 @@ def preencher_dados_transacao(driver, dados: dict):
             logging.error(f"Falha ao preencher os dados do financiamento: {e}")
             raise
 
-    # totalidade
-    if dados.get("transmite_totalidade"):
-        u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_sim_radio"], driver)   
-    else:
-        u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_nao_radio"], driver)
 
+    # Totalidade: -----------------------------
+
+    logging.info("Preenchendo informações sobre a totalidade do imóvel.")
+    if dados.get("transmite_totalidade"):
+        u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_sim_radio"], driver)
+        logging.info("Selecionado 'SIM' para a transmissão da totalidade do imóvel.")
+    else:
+        # Se transmite_totalidade for False, clicamos em "NÃO"
+        u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_nao_radio"], driver)
+        logging.info("Selecionado 'NÃO' para a transmissão da totalidade. Aguardando campo de proporção.")
+
+        try:
+            # Esperar explicitamente que o campo "PROPORÇÃO TRANSMITIDA" se torne visível
+            wait = WebDriverWait(driver, 10)
+            seletor_proporcao = FORMULARIO_LOCATORS["transacao_proporcao_transmitida_input"]
+            
+            wait.until(
+                EC.visibility_of_element_located((By.XPATH, seletor_proporcao))
+            )
+            logging.info("Campo 'Proporção Transmitida' está visível.")
+
+            # Verificar se o dado da proporção foi fornecido
+            proporcao_valor = dados.get("proporcao_transmitida")
+            if not proporcao_valor:
+                raise ValueError("A transmissão da totalidade é 'NÃO', mas o valor para 'proporcao_transmitida' não foi fornecido.")
+
+            # Preencher o campo
+            u.fill_input(seletor_proporcao, proporcao_valor, driver)
+            logging.info(f"Proporção transmitida de '{proporcao_valor}%' preenchida.")
+
+        except TimeoutException:
+            logging.error("O campo 'Proporção Transmitida' não ficou visível após clicar em 'NÃO'.")
+            raise Exception("Falha crítica: O campo de proporção não apareceu.")
+        except Exception as e:
+            logging.error(f"Erro ao preencher a proporção transmitida: {e}")
+            raise
+
+
+    # Tipo de escritura -----------------------------
     if dados.get("tipo_instrumento") == "ESCRITURA_PUBLICA":
         u.click_button(FORMULARIO_LOCATORS["transacao_tipo_instrumento_escritura_radio"], driver)
     else:
@@ -334,6 +368,7 @@ def sao_paulo_bot():
                 "tipo_financiamento": "Sistema Financeiro de Habitação", # Opções válidas (SOMENTE): "Sistema Financeiro de Habitação" ou "Minha Casa Minha Vida" ou "Consórcio" ou "SFI, Carteira Hipotecária, etc", "NULL"
                 "valor_financiamento": "150000", # valor FINANCIADO (NÃO é o VALOR TOTAL)
                 "transmite_totalidade": True, # True para Sim, False para Não
+                "proporcao_transmitida": "50,00", # VALOR EM PORCENTAGEM
                 "tipo_instrumento": "ESCRITURA_PUBLICA", # Opções válidas (SOMENTE): "ESCRITURA_PUBLICA" ou "INSTRUMENTO_PARTICULAR"
                 "cartorio_registro": "1º Oficial de Registro de Imóveis", # Opções válidas (SOMENTE): "1º Cartório de Registro de Imóvel", "2º ..." e assim por diante, até o 18º. 
                 "matricula": "98765"
