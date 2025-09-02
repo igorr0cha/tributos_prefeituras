@@ -114,6 +114,7 @@ def preencher_dados_imovel(driver, dados: dict):
         "cep": '//*[@id="pnlTela1"]/div/fieldset[1]/div/div[3]/input',
         "logradouro": '//*[@id="txtEnderecoImovel"]',
     }
+
     for nome, xpath in campos_a_verificar.items():
         elemento = u.get_element(xpath, driver)
         valor_do_campo = elemento.get_attribute("value")
@@ -150,6 +151,10 @@ def preencher_pessoas(driver, tipo_pessoa: str, pessoas: list):
             logging.info(f"Nome preenchido automaticamente para {tipo_pessoa} {i+1}: {nome_valor}")
 
 
+# Arquivo: bots/sao_paulo.py
+
+# (Mantenha todos os seus imports e o resto do código como está)
+
 def preencher_dados_transacao(driver, dados: dict):
     
     logging.info("Preenchendo dados da transação...")
@@ -157,89 +162,123 @@ def preencher_dados_transacao(driver, dados: dict):
     # Valor total da transação
     u.fill_input(FORMULARIO_LOCATORS["transacao_valor_total"], dados.get("valor_total"), driver)
 
-    # Navega para o campo de tipo de financiamento
-    u.scroll_to_element(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], driver)
-
-    # Verifica se é financiado:
+    # Verifica se a transação é financiada
     if dados.get("financiado"):
         try:    
-            logging.info("Transação é financiada. Preenchendo detalhes do financiamento...")
+            logging.info("Transação financiada. Modificando estado do componente Vue via JavaScript.")
 
-            tipo_financiamento_desejado = dados.get("tipo_financiamento")
-            if not tipo_financiamento_desejado:
+            tipo_financiamento_texto = dados.get("tipo_financiamento")
+            if not tipo_financiamento_texto:
                 raise ValueError("O 'tipo_financiamento' não foi fornecido nos dados.")
+
+        
+            ## Passo 1: Encontrar o valor correto da <option>
+
+            seletor_dropdown = FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"]
+
+            u.scroll_to_element(seletor_dropdown, driver)
+
+            wait = WebDriverWait(driver, 15)
+            dropdown = wait.until(EC.presence_of_element_located((By.XPATH, seletor_dropdown)))
+            option_xpath = f".//option[normalize-space(text())='{tipo_financiamento_texto}']"
+            valor_da_opcao = dropdown.find_element(By.XPATH, option_xpath).get_attribute("value")
+            logging.info(f"Opção de financiamento encontrada: Texto='{tipo_financiamento_texto}', Valor='{valor_da_opcao}'.")
+
+            ## Passo 2: Script que encontra a instância Vue e manipular seu estado
+
+            id_do_dropdown = "cboTpFinan"
             
-            # --- ABORDAGEM ROBUSTA PARA VUE.JS ---
-            try:
-                logging.info(f"Tentando selecionar a opção '{tipo_financiamento_desejado}' simulando clique humano.")
-                
-                # Passo 1: Clicar no dropdown para abrir as opções
-                dropdown_element = u.get_element(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], driver)
-                dropdown_element.click()
-                
-                # Pausa curta para garantir que as opções foram renderizadas pelo JS
-                time.sleep(0.5)
+            script = f"""
+                // Argumentos passados do Selenium para o script
+                const dropdownId = arguments[0];
+                const optionValue = arguments[1];
 
-                # Passo 2: Localizar e clicar diretamente na <option> desejada pelo texto
-                option_xpath = f"//option[normalize-space()='{tipo_financiamento_desejado}']"
-                option_element = WebDriverWait(driver, 5).until(
-                    EC.element_to_be_clickable((By.XPATH, option_xpath))
-                )
-                option_element.click()
-                
-                logging.info("Clique direto na <option> realizado com sucesso.")
+                // 1. Pega o elemento do DOM
+                const dropdownElement = document.getElementById(dropdownId);
+                if (!dropdownElement) {{
+                    return {{ success: false, message: 'Elemento dropdown #' + dropdownId + ' não encontrado.' }};
+                }}
 
-            except Exception as e:
-                logging.error(f"Falha ao tentar simular o clique humano. Erro: {e}")
-                # Se a simulação de clique falhar, você pode manter sua tentativa com a classe Select como fallback.
-                logging.info("Tentando método alternativo com a classe Select.")
-                select_object = Select(u.get_element(FORMULARIO_LOCATORS["transacao_tipo_financiamento_select"], driver))
-                select_object.select_by_visible_text(tipo_financiamento_desejado)
-                logging.info("Método alternativo com a classe Select concluído.")
+                // 2. Encontra a instância Vue correta subindo na árvore DOM
+                // A lógica (métodos e dados) está no componente pai do dropdown.
+                let el = dropdownElement;
+                let vueComponent = null;
+                while (el.parentElement) {{
+                    el = el.parentElement;
+                    if (el.__vue__) {{
+                        // Verificamos se este componente Vue tem o método que precisamos
+                        if (typeof el.__vue__.atualizaDescricaoTipoFinanciamento === 'function') {{
+                            vueComponent = el.__vue__;
+                            break;
+                        }}
+                    }}
+                }}
 
-            # Lida com o popup de aviso que pode aparecer após a seleção
+                if (!vueComponent) {{
+                    return {{ success: false, message: 'Instância Vue com o método necessário não foi encontrada.' }};
+                }}
+
+                // 3. ATUALIZA O ESTADO DIRETAMENTE (A parte mais importante)
+                // Isso atualiza a variável 'tipoFinanciamento' no 'data' do componente
+                vueComponent.tipoFinanciamento = optionValue;
+
+                // 4. CHAMA O MÉTODO DIRETAMENTE
+                // Isso executa a função que muda 'exibeValorFinanciado' para true
+                vueComponent.atualizaDescricaoTipoFinanciamento(dropdownElement);
+
+                return {{ success: true, message: 'Estado do componente Vue modificado com sucesso.' }};
+            """
+            
+            # Executa o script e passa os argumentos necessários
+            resultado = driver.execute_script(script, id_do_dropdown, valor_da_opcao)
+            
+            if not resultado or not resultado.get('success'):
+                error_message = resultado.get('message', 'Erro desconhecido ao executar script Vue.')
+                raise Exception(f"Falha ao manipular o componente Vue: {error_message}")
+            
+            logging.info(f"Script Vue executado: {resultado.get('message')}")
+
+
+            # Passo 3: Lidar com o popup de aviso
             sp_close_aviso_financiamento(driver)
 
-            # Aguarda o campo de valor financiado ficar VISÍVEL (essa é a chave!)
-            logging.info("Aguardando o campo 'Valor Financiado' se tornar visível...")
 
-            
-            valor_financiado_xpath = FORMULARIO_LOCATORS["transacao_valor_financiamento"]
-            
-            WebDriverWait(driver, 10).until(
-                EC.visibility_of_element_located((By.XPATH, valor_financiado_xpath))
+            # Passo 4: Esperar o campo 'Valor Financiado' se tornar visível
+            logging.info("Aguardando o campo 'Valor Financiado' se tornar visível...")
+            seletor_valor_financiado = FORMULARIO_LOCATORS["transacao_valor_financiamento"]
+            wait.until(
+                EC.visibility_of_element_located((By.XPATH, seletor_valor_financiado))
             )
             logging.info("Campo 'Valor Financiado' está visível.")
-            
-            # Preenche o campo de valor financiado
+
+
+            # Passo 5: Preencher o valor financiado
             valor_a_preencher = dados.get("valor_financiamento")
-            u.fill_input(valor_financiado_xpath, valor_a_preencher, driver)
-            logging.info("Valor do financiamento preenchido com sucesso.")
+            u.fill_input(seletor_valor_financiado, valor_a_preencher, driver)
+            logging.info(f"Valor financiado '{valor_a_preencher}' preenchido.")
+
 
         except TimeoutException:
-            logging.error("O campo 'Valor Financiado' não ficou visível após 10 segundos.")
-            raise Exception("Falha ao aguardar a aparição do campo de valor financiado.")
+            logging.error("O campo 'Valor Financiado' não ficou visível após a manipulação do componente Vue.")
+            raise Exception("Falha crítica: O campo de valor financiado não apareceu.")
         except Exception as e:
             logging.error(f"Falha ao preencher os dados do financiamento: {e}")
             raise
 
-
-
-    # Totalidade do imóvel
+    # totalidade
     if dados.get("transmite_totalidade"):
         u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_sim_radio"], driver)   
     else:
         u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_nao_radio"], driver)
 
-    # Tipo de instrumento
     if dados.get("tipo_instrumento") == "ESCRITURA_PUBLICA":
         u.click_button(FORMULARIO_LOCATORS["transacao_tipo_instrumento_escritura_radio"], driver)
-    else: # Assume "INSTRUMENTO_PARTICULAR" como padrão
+    else:
         u.click_button(FORMULARIO_LOCATORS["transacao_tipo_instrumento_particular_radio"], driver)
 
-    # Lógica para matrícula/transcrição do cartório de registro
     u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_cartorio_select"], dados.get("cartorio_registro"), driver)
     u.fill_input(FORMULARIO_LOCATORS["transacao_matricula"], dados.get("matricula"), driver)
+
 
 def sp_close_aviso_financiamento(driver):
     """
