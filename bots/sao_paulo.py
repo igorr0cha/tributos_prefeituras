@@ -46,6 +46,12 @@ FORMULARIO_LOCATORS = {
     "transacao_tipo_instrumento_particular_radio": '//*[@id="divTipoInstrumento"]/span[1]/label',
     "transacao_tipo_instrumento_escritura_radio": '//*[@id="divTipoInstrumento"]/span[2]/label',
 
+    # Campos que aparecem após selecionar o tipo de instrumento
+    "transacao_data_input": "//input[@id='date']", # Mais robusto e específico
+    "transacao_cartorio_notas_input": "//input[@id='txtCartorioNotas']",
+    "transacao_uf_cartorio_select": "//select[@id='TxtUfCartorioNotas']",
+    "transacao_municipio_cartorio_input": "//input[@id='txtMunicipioCartorioNotas']",
+
     "transacao_cartorio_select": '//*[@id="DdlCartorioRegistroImovel"]',
     "transacao_matricula": '//*[@id="txtMatricula"]'
 } 
@@ -332,11 +338,82 @@ def preencher_dados_transacao(driver, dados: dict):
         except Exception as e:
             raise Exception(f"Erro ao preencher a proporção transmitida: {e}")
 
-    if dados.get("tipo_instrumento") == "ESCRITURA_PUBLICA":
-        u.click_button(FORMULARIO_LOCATORS["transacao_tipo_instrumento_escritura_radio"], driver)
-    else:
-        u.click_button(FORMULARIO_LOCATORS["transacao_tipo_instrumento_particular_radio"], driver)
 
+
+    # Tipo de instrumento -----------------------------
+
+    logging.info("Preenchendo o tipo de instrumento.")
+    tipo_instrumento = dados.get("tipo_instrumento")
+    if tipo_instrumento == "ESCRITURA_PUBLICA":
+        valor_vue = "Publico"
+        radio_id = "rad_publico"
+    elif tipo_instrumento == "INSTRUMENTO_PARTICULAR":
+        valor_vue = "Particular"
+        radio_id = "rad_particular"
+    else:
+        raise ValueError(f"Tipo de instrumento '{tipo_instrumento}' é inválido.")
+
+    try:
+        script = f"""
+            const radioId = arguments[0];
+            const instrumentValue = arguments[1];
+            const radioElement = document.getElementById(radioId);
+            if (!radioElement) return {{ success: false, message: 'Elemento radio #' + radioId + ' não encontrado.' }};
+            
+            let el = radioElement;
+            let vueComponent = null;
+            while (el.parentElement) {{
+                el = el.parentElement;
+                if (el.__vue__) {{
+                    if (typeof el.__vue__.mostrarDataTransacao === 'function' && typeof el.__vue__.mostrarCartorioNotas === 'function') {{
+                        vueComponent = el.__vue__;
+                        break;
+                    }}
+                }}
+            }}
+            if (!vueComponent) return {{ success: false, message: 'Instância Vue com os métodos necessários não foi encontrada.' }};
+
+            document.querySelector('label[for="' + radioId + '"]').click();
+            vueComponent.tipoInstrumento = instrumentValue;
+            vueComponent.mostrarDataTransacao();
+            vueComponent.mostrarCartorioNotas();
+            
+            return {{ success: true, message: 'Estado do tipo de instrumento modificado.' }};
+        """
+        resultado = driver.execute_script(script, radio_id, valor_vue)
+        if not resultado or not resultado.get('success'):
+            raise Exception(f"Falha ao manipular Vue para tipo de instrumento: {resultado.get('message', 'Erro desconhecido')}")
+        
+        logging.info(f"Script Vue para tipo de instrumento executado: {resultado.get('message')}")
+
+        # --- LÓGICA CORRIGIDA ---
+        # Aguardar e preencher os campos que aparecem
+        wait = WebDriverWait(driver, 10)
+        logging.info("Aguardando campos de data e cartório se tornarem visíveis...")
+
+        # O campo de data sempre aparece, então esperamos por ele e o preenchemos
+        wait.until(EC.visibility_of_element_located((By.XPATH, FORMULARIO_LOCATORS["transacao_data_input"])))
+        u.fill_input(FORMULARIO_LOCATORS["transacao_data_input"], dados.get("data_registro"), driver)
+        logging.info("Campo 'Data da Transação' preenchido.")
+
+        # Os campos de cartório só aparecem para 'Escritura Pública'
+        if tipo_instrumento == "ESCRITURA_PUBLICA":
+            wait.until(EC.visibility_of_element_located((By.XPATH, FORMULARIO_LOCATORS["transacao_cartorio_notas_input"])))
+            
+            u.fill_input(FORMULARIO_LOCATORS["transacao_cartorio_notas_input"], dados.get("cartorio_notas"), driver)
+            u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_uf_cartorio_select"], dados.get("uf_cartorio"), driver)
+            u.fill_input(FORMULARIO_LOCATORS["transacao_municipio_cartorio_input"], dados.get("municipio_cartorio"), driver)
+            logging.info("Campos de cartório de notas preenchidos.")
+        
+        logging.info("Campos dinâmicos de 'Tipo de Instrumento' preenchidos com sucesso.")
+
+    except Exception as e:
+        # Adiciona exc_info=True para logar o traceback completo do erro
+        logging.error(f"Erro ao selecionar o tipo de instrumento: {e}", exc_info=True)
+        raise
+
+    # CARTÓRIO DE REGISTRO E MATRÍCULA -----------------------------
+    logging.info("Preenchendo cartório de registro e matrícula.")
     u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_cartorio_select"], dados.get("cartorio_registro"), driver)
     u.fill_input(FORMULARIO_LOCATORS["transacao_matricula"], dados.get("matricula"), driver)
 
@@ -397,7 +474,14 @@ def sao_paulo_bot():
                 "transmite_totalidade": False, # True para Sim, False para Não
                 "proporcao_transmitida": "50,00", # VALOR EM PORCENTAGEM
                 "tipo_instrumento": "ESCRITURA_PUBLICA", # Opções válidas (SOMENTE): "ESCRITURA_PUBLICA" ou "INSTRUMENTO_PARTICULAR"
-                "cartorio_registro": "1º Oficial de Registro de Imóveis", # Opções válidas (SOMENTE): "1º Cartório de Registro de Imóvel", "2º ..." e assim por diante, até o 18º. 
+                
+                # --- DADOS NECESSÁRIOS PARA OS NOVOS CAMPOS ---
+                "data_registro": "04/09/2025",
+                "cartorio_notas": "2º Tabelionato de Notas",
+                "uf_cartorio": "SP",
+                "municipio_cartorio": "São Paulo",
+                # ----------------------------------------------
+                "cartorio_registro": "1º Cartório de Registro de Imóvel",
                 "matricula": "98765"
             }
         }
