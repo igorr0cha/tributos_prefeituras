@@ -269,11 +269,15 @@ def preencher_dados_transacao(driver, dados: dict):
     # Totalidade: -----------------------------
 
     logging.info("Preenchendo informações sobre a totalidade do imóvel.")
+
     if dados.get("transmite_totalidade"):
         u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_sim_radio"], driver)
         logging.info("Selecionado 'SIM' para a transmissão da totalidade do imóvel.")
-    else:
+    else: 
         # Se transmite_totalidade for False, clicamos em "NÃO"
+
+        # TODO: VERIFICAR E AJUSTAR ERRO DEBUGANDO
+
         u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_nao_radio"], driver)
         logging.info("Selecionado 'NÃO' para a transmissão da totalidade. Aguardando campo de proporção.")
 
@@ -367,7 +371,7 @@ def sao_paulo_bot():
                 "financiado": True, # True para Sim, False para Não
                 "tipo_financiamento": "Sistema Financeiro de Habitação", # Opções válidas (SOMENTE): "Sistema Financeiro de Habitação" ou "Minha Casa Minha Vida" ou "Consórcio" ou "SFI, Carteira Hipotecária, etc", "NULL"
                 "valor_financiamento": "150000", # valor FINANCIADO (NÃO é o VALOR TOTAL)
-                "transmite_totalidade": True, # True para Sim, False para Não
+                "transmite_totalidade": False, # True para Sim, False para Não
                 "proporcao_transmitida": "50,00", # VALOR EM PORCENTAGEM
                 "tipo_instrumento": "ESCRITURA_PUBLICA", # Opções válidas (SOMENTE): "ESCRITURA_PUBLICA" ou "INSTRUMENTO_PARTICULAR"
                 "cartorio_registro": "1º Oficial de Registro de Imóveis", # Opções válidas (SOMENTE): "1º Cartório de Registro de Imóvel", "2º ..." e assim por diante, até o 18º. 
