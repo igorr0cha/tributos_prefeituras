@@ -510,6 +510,13 @@ def preencher_dados_transacao(driver, dados: dict):
     # Preenche a matrícula (continua igual)
     u.fill_input(FORMULARIO_LOCATORS["transacao_matricula"], dados.get("matricula"), driver)
 
+    # Clica para avançar
+    driver.find_elements(By.XPATH, FORMULARIO_LOCATORS['botao_avancar'])[0].click()
+    
+    # Fecha pop-aviso isenção financiamento, se aberto
+
+    sp_close_aviso_financiamento(driver)
+
 def sp_close_aviso_financiamento(driver):
     """
     Aguarda e fecha o popup de "Informação Sobre Financiamento" se ele aparecer.
@@ -594,6 +601,7 @@ def sao_paulo_bot():
 
         # transacao
         preencher_dados_transacao(driver, dados_completos_itbi["transacao"])
+        
 
         logging.info("Formulário preenchido. Pausa para verificação.")
         time.sleep(15)
