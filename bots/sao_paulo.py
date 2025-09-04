@@ -3,6 +3,9 @@
 import logging
 import time
 import utils.selenium_utils as u
+
+import random
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys # Importa a classe Keys
@@ -162,25 +165,58 @@ def preencher_pessoas(driver, tipo_pessoa: str, pessoas: list):
         logging.info(f"Preenchendo dados para {tipo_pessoa} {i+1}:")
         if i > 0:
             u.click_button(FORMULARIO_LOCATORS[f"{tipo_pessoa}_adicionar_btn"], driver)
-            # time.sleep(2) # TODO: VERIFICAR TEMPO
+            time.sleep(1) # Pausa para o novo campo aparecer
 
-        campo_cpf_cnpj = u.scroll_to_element(FORMULARIO_LOCATORS[f"{tipo_pessoa}_cpf_cnpj"], driver)
+        # Localiza o campo e limpa antes de preencher
+        seletor_cpf_cnpj = FORMULARIO_LOCATORS[f"{tipo_pessoa}_cpf_cnpj"]
+        campo_cpf_cnpj = u.scroll_to_element(seletor_cpf_cnpj, driver)
         campo_cpf_cnpj.clear()
+        
         cpf_cnpj_valor = pessoa.get("cpf_cnpj")
-        u.fill_input(FORMULARIO_LOCATORS[f"{tipo_pessoa}_cpf_cnpj"], cpf_cnpj_valor, driver)
-        # time.sleep(1)  # TODO: VERIFICAR TEMPO
+        if not cpf_cnpj_valor:
+            logging.warning(f"CPF/CNPJ não fornecido para {tipo_pessoa} {i+1}. Pulando.")
+            continue
+
+        # Limpa o valor para contar apenas os dígitos
+        digitos_apenas = ''.join(filter(str.isdigit, cpf_cnpj_valor))
+        
+        # --- LÓGICA CONDICIONAL DE PREENCHIMENTO ---
+        if len(digitos_apenas) == 14:
+            # É um CNPJ: digita lentamente, como um humano
+            logging.info(f"Detectado CNPJ. Digitanto '{cpf_cnpj_valor}' lentamente.")
+            for caractere in cpf_cnpj_valor:
+                campo_cpf_cnpj.send_keys(caractere)
+                # Pausa aleatória entre 50 e 150 milissegundos
+                time.sleep(random.uniform(0.05, 0.15))
+        else:
+            # É um CPF ou outro: usa o preenchimento rápido padrão
+            logging.info(f"Detectado CPF. Preenchendo '{cpf_cnpj_valor}' rapidamente.")
+            campo_cpf_cnpj.send_keys(cpf_cnpj_valor)
+        
+        # Pressiona TAB para acionar o preenchimento automático do nome
+        campo_cpf_cnpj.send_keys(Keys.TAB)
+        time.sleep(1.5) # Pausa para a requisição do nome ser concluída
 
         # Verifica se o nome foi preenchido automaticamente
         nome_xpath = f'//*[@id="fdsComprador"]/div[1]/div[2]/div/div/input' if tipo_pessoa == "comprador" else f'//*[@id="fdsVendedor"]/div[1]/div[2]/div/div/input'
-        campo_nome = u.scroll_to_element(nome_xpath, driver)
-        nome_valor = campo_nome.get_attribute("value")
+        
+        try:
+            # Espera explícita para o nome ser preenchido
+            campo_nome = WebDriverWait(driver, 5).until(
+                lambda d: d.find_element(By.XPATH, nome_xpath)
+            )
+            nome_valor = campo_nome.get_attribute("value")
 
-        if not nome_valor:
-            logging.info(f"Nome não preenchido automaticamente para {tipo_pessoa} {i+1}. Inserindo manualmente.")
-            nome_manual = pessoa.get("nome") or "NOME_MANUAL"
-            campo_nome.send_keys(nome_manual)
-        else:
-            logging.info(f"Nome preenchido automaticamente para {tipo_pessoa} {i+1}: {nome_valor}")
+            if nome_valor:
+                logging.info(f"Nome preenchido automaticamente para {tipo_pessoa} {i+1}: {nome_valor}")
+            else:
+                # Se o valor ainda estiver vazio, preenche manualmente
+                logging.info(f"Nome não preenchido automaticamente para {tipo_pessoa} {i+1}. Inserindo manualmente.")
+                nome_manual = pessoa.get("nome") or "NOME_NAO_ENCONTRADO"
+                campo_nome.send_keys(nome_manual)
+        except TimeoutException:
+            logging.error(f"O campo de nome para {tipo_pessoa} {i+1} não foi encontrado.")
+            raise
 
 
 # Arquivo: bots/sao_paulo.py
@@ -520,7 +556,7 @@ def sao_paulo_bot():
                 {"cpf_cnpj": "755.173.613-15"} # Só precisamos do CPF
             ],
             "vendedores": [
-                {"cpf_cnpj": "00.360.305/0010-40"} # Só precisamos do CPF/CNPJ
+                {"cpf_cnpj": "00360305000104"} # Só precisamos do CPF/CNPJ
             ],
             "transacao": {
                 "valor_total": "200000", # valor/preço TOTAL da transação
