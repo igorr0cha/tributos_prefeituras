@@ -56,6 +56,32 @@ FORMULARIO_LOCATORS = {
     "transacao_matricula": '//*[@id="txtMatricula"]'
 } 
 # ------------------------------------
+
+# --- MAPEAMENTO DE CARTÓRIOS DE REGISTRO ---
+# Mapeia o nome completo do cartório para o valor numérico usado no <select> do site.
+CARTORIO_REGISTRO_MAP = {
+    "1º Cartório de Registro de Imóvel": "1",
+    "2º Cartório de Registro de Imóvel": "2",
+    "3º Cartório de Registro de Imóvel": "3",
+    "4º Cartório de Registro de Imóvel": "4",
+    "5º Cartório de Registro de Imóvel": "5",
+    "6º Cartório de Registro de Imóvel": "6",
+    "7º Cartório de Registro de Imóvel": "7",
+    "8º Cartório de Registro de Imóvel": "8",
+    "9º Cartório de Registro de Imóvel": "9",
+    "10º Cartório de Registro de Imóvel": "10",
+    "11º Cartório de Registro de Imóvel": "11",
+    "12º Cartório de Registro de Imóvel": "12",
+    "13º Cartório de Registro de Imóvel": "13",
+    "14º Cartório de Registro de Imóvel": "14",
+    "15º Cartório de Registro de Imóvel": "15",
+    "16º Cartório de Registro de Imóvel": "16",
+    "17º Cartório de Registro de Imóvel": "17",
+    "18º Cartório de Registro de Imóvel": "18",
+}
+# ------------------------------------
+
+
 # Funções secundárias da perfeitura de SAO PAULO
 
 def sp_cookie_accept(driver):
@@ -413,10 +439,40 @@ def preencher_dados_transacao(driver, dados: dict):
         raise
 
     # CARTÓRIO DE REGISTRO E MATRÍCULA -----------------------------
-    logging.info("Preenchendo cartório de registro e matrícula.")
-    u.get_select_option_by_text(FORMULARIO_LOCATORS["transacao_cartorio_select"], dados.get("cartorio_registro"), driver)
-    u.fill_input(FORMULARIO_LOCATORS["transacao_matricula"], dados.get("matricula"), driver)
 
+    logging.info("Preenchendo cartório de registro e matrícula.")
+    
+    try:
+        # Pega o nome do cartório dos dados de entrada
+        cartorio_texto = dados.get("cartorio_registro")
+        if not cartorio_texto:
+            raise ValueError("O nome do 'cartorio_registro' não foi fornecido.")
+
+        # Usa o mapa para encontrar o valor numérico correspondente
+        cartorio_valor_numerico = CARTORIO_REGISTRO_MAP.get(cartorio_texto)
+        
+        # Verifica se o cartório foi encontrado no mapa
+        if not cartorio_valor_numerico:
+            raise ValueError(f"Cartório de registro inválido ou não mapeado: '{cartorio_texto}'")
+
+        # Encontra o elemento dropdown
+        seletor_cartorio = FORMULARIO_LOCATORS["transacao_cartorio_select"]
+        elemento_select = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, seletor_cartorio))
+        )
+        
+        # Usa a classe Select para escolher a opção pelo VALOR numérico obtido do mapa
+        select = Select(elemento_select)
+        select.select_by_value(cartorio_valor_numerico)
+
+        logging.info(f"Cartório de registro '{cartorio_texto}' (valor: {cartorio_valor_numerico}) selecionado com sucesso.")
+
+    except Exception as e:
+        logging.error(f"Não foi possível selecionar o cartório de registro: {e}", exc_info=True)
+        raise
+
+    # Preenche a matrícula (continua igual)
+    u.fill_input(FORMULARIO_LOCATORS["transacao_matricula"], dados.get("matricula"), driver)
 
 def sp_close_aviso_financiamento(driver):
     """
@@ -474,7 +530,7 @@ def sao_paulo_bot():
                 "transmite_totalidade": False, # True para Sim, False para Não
                 "proporcao_transmitida": "50,00", # VALOR EM PORCENTAGEM
                 "tipo_instrumento": "ESCRITURA_PUBLICA", # Opções válidas (SOMENTE): "ESCRITURA_PUBLICA" ou "INSTRUMENTO_PARTICULAR"
-                
+
                 # --- DADOS NECESSÁRIOS PARA OS NOVOS CAMPOS ---
                 "data_registro": "04/09/2025",
                 "cartorio_notas": "2º Tabelionato de Notas",
