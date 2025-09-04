@@ -269,46 +269,69 @@ def preencher_dados_transacao(driver, dados: dict):
     # Totalidade: -----------------------------
 
     logging.info("Preenchendo informações sobre a totalidade do imóvel.")
-
     if dados.get("transmite_totalidade"):
         u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_sim_radio"], driver)
         logging.info("Selecionado 'SIM' para a transmissão da totalidade do imóvel.")
-    else: 
-        # Se transmite_totalidade for False, clicamos em "NÃO"
-
-        # TODO: VERIFICAR E AJUSTAR ERRO DEBUGANDO
-
-        u.click_button(FORMULARIO_LOCATORS["transacao_totalidade_nao_radio"], driver)
-        logging.info("Selecionado 'NÃO' para a transmissão da totalidade. Aguardando campo de proporção.")
-
+    else:
+        # Se transmite_totalidade for False, usamos o script para selecionar "NÃO"
+        logging.info("Selecionando 'NÃO' para a transmissão da totalidade via script Vue.")
         try:
+            radio_button_id = 'rdlTotalidadeNao'
+            script = f"""
+                const radioId = arguments[0];
+                const radioElement = document.getElementById(radioId);
+                if (!radioElement) {{
+                    return {{ success: false, message: 'Elemento radio #' + radioId + ' não encontrado.' }};
+                }}
+                let el = radioElement;
+                let vueComponent = null;
+                while (el.parentElement) {{
+                    el = el.parentElement;
+                    if (el.__vue__) {{
+                        if (typeof el.__vue__.mostrarTotalidade === 'function') {{
+                            vueComponent = el.__vue__;
+                            break;
+                        }}
+                    }}
+                }}
+                if (!vueComponent) {{
+                    return {{ success: false, message: 'Instância Vue com o método mostrarTotalidade não foi encontrada.' }};
+                }}
+                
+                // Clica no label para garantir a mudança visual
+                document.querySelector('label[for="' + radioId + '"]').click();
+                
+                // Atualiza o estado e chama o método
+                vueComponent.transmissaoTotalidade = 'Não';
+                vueComponent.mostrarTotalidade();
+                
+                return {{ success: true, message: 'Estado da totalidade modificado com sucesso.' }};
+            """
+            resultado = driver.execute_script(script, radio_button_id)
+
+            if not resultado or not resultado.get('success'):
+                raise Exception(f"Falha ao manipular Vue para totalidade: {resultado.get('message', 'Erro desconhecido')}")
+            
+            logging.info(f"Script Vue para totalidade executado: {resultado.get('message')}")
+            
             # Esperar explicitamente que o campo "PROPORÇÃO TRANSMITIDA" se torne visível
             wait = WebDriverWait(driver, 10)
             seletor_proporcao = FORMULARIO_LOCATORS["transacao_proporcao_transmitida_input"]
-            
-            wait.until(
-                EC.visibility_of_element_located((By.XPATH, seletor_proporcao))
-            )
+            wait.until(EC.visibility_of_element_located((By.XPATH, seletor_proporcao)))
             logging.info("Campo 'Proporção Transmitida' está visível.")
 
-            # Verificar se o dado da proporção foi fornecido
             proporcao_valor = dados.get("proporcao_transmitida")
             if not proporcao_valor:
                 raise ValueError("A transmissão da totalidade é 'NÃO', mas o valor para 'proporcao_transmitida' não foi fornecido.")
 
-            # Preencher o campo
             u.fill_input(seletor_proporcao, proporcao_valor, driver)
             logging.info(f"Proporção transmitida de '{proporcao_valor}%' preenchida.")
 
         except TimeoutException:
-            logging.error("O campo 'Proporção Transmitida' não ficou visível após clicar em 'NÃO'.")
-            raise Exception("Falha crítica: O campo de proporção não apareceu.")
+            raise Exception("Falha crítica: O campo de proporção não apareceu após a seleção.")
         except Exception as e:
-            logging.error(f"Erro ao preencher a proporção transmitida: {e}")
-            raise
+            raise Exception(f"Erro ao preencher a proporção transmitida: {e}")
 
-
-    # Tipo de escritura -----------------------------
     if dados.get("tipo_instrumento") == "ESCRITURA_PUBLICA":
         u.click_button(FORMULARIO_LOCATORS["transacao_tipo_instrumento_escritura_radio"], driver)
     else:
