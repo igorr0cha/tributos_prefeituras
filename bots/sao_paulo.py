@@ -192,7 +192,7 @@ def preencher_pessoas(driver, tipo_pessoa: str, pessoas: list):
             logging.info(f"Detectado CPF/CNPJ. Digitanto '{cpf_cnpj_valor}' lentamente.")
             for caractere in cpf_cnpj_valor:
                 campo_cpf_cnpj.send_keys(caractere)
-                # Pausa aleatória entre 10 e 60 milissegundos
+                # Pausa aleatória entre 50 e 150 milissegundos
                 time.sleep(random.uniform(0.05, 0.15))
             # Pressiona TAB para acionar o preenchimento automático do nome
             campo_cpf_cnpj.send_keys(Keys.TAB)
@@ -306,11 +306,7 @@ def preencher_dados_transacao(driver, dados: dict):
 
 
             # Passo 3: Lidar com o popup de aviso
-            pop_up_bool = sp_close_aviso_financiamento(FORMULARIO_LOCATORS["botao_aviso_financiamento"],driver)
-            if pop_up_bool:
-                logging.info("Popup de aviso de financiamento fechado com sucesso.")
-            else:
-                logging.warning("Popup de aviso de financiamento não foi encontrado, e seguimos com automação.")
+            sp_close_aviso_financiamento(FORMULARIO_LOCATORS["botao_aviso_financiamento"],driver)
 
             # Passo 4: Esperar o campo 'Valor Financiado' se tornar visível
             logging.info("Aguardando o campo 'Valor Financiado' se tornar visível...")
@@ -511,7 +507,7 @@ def preencher_dados_transacao(driver, dados: dict):
     u.fill_input(FORMULARIO_LOCATORS["transacao_matricula"], dados.get("matricula"), driver)
 
     # Clica para avançar
-    u.scroll_to_element(FORMULARIO_LOCATORS["botao_avancar"], driver).click()
+    driver.find_elements(By.XPATH, FORMULARIO_LOCATORS['botao_avancar'])[0].click()
 
     #  Clicando para calcular imposto na próxima página
     u.wait_for_page_load(driver)
@@ -543,17 +539,14 @@ def sp_close_aviso_financiamento(button_xpath,driver):
         wait.until(EC.invisibility_of_element_located((By.XPATH, button_xpath)))
         logging.info("Popup de aviso fechado com sucesso.")
 
-        return True
-    
     except TimeoutException:
         # Se o popup não aparecer em 5 segundos, apenas continua
         logging.info("Popup de aviso de financiamento não apareceu. Continuando sem ação.")
-        return False
-    
+  
     except Exception as e:
         # Captura outros erros inesperados ao tentar fechar o popup.
         logging.error(f"Erro inesperado ao tentar fechar o aviso de financiamento: {e}")
-        return False
+
 
 
 
