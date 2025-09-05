@@ -37,7 +37,7 @@ FORMULARIO_LOCATORS = {
     # Seção: Dados da Transação
     "transacao_valor_total": '//*[@id="pnlTela1"]/div/fieldset[4]/div/div[1]/input',
 
-    "transacao_tipo_financiamento_select": '//*[@id="cboTpFinan"]', # TODO: VERIFICAR ESSE CAMINHO
+    "transacao_tipo_financiamento_select": '//*[@id="cboTpFinan"]', 
     "transacao_valor_financiamento": '//*[@id="txt_valor_financiado"]',
     "aviso_financiamento": '/html/body/div[3]/div',
     "botao_aviso_financiamento": "//button[contains(@class, 'swal2-confirm')]", # class
@@ -56,10 +56,17 @@ FORMULARIO_LOCATORS = {
     "transacao_municipio_cartorio_input": "//input[@id='txtMunicipioCartorioNotas']",
 
     "transacao_cartorio_select": '//*[@id="DdlCartorioRegistroImovel"]',
-    "transacao_matricula": '//*[@id="txtMatricula"]'
+    "transacao_matricula": '//*[@id="txtMatricula"]',
+
+    "botao_avancar": '//*[@id="pnlTela1"]/div/div[5]/button[2]',
+    "botao_aviso_financiamento_fechar": '/html/body/div[3]/div/div[1]/button' ,
+
+    # página PÓS AVANÇAR:
+    "botao_calcular_imposto": '//*[@id="secao-para-impressao-confirmacao"]/div[5]/button[2]',
+    "botao_emitir_guia_tributos": '',
 } 
 # ------------------------------------
-
+ 
 # --- MAPEAMENTO DE CARTÓRIOS DE REGISTRO ---
 # Mapeia o nome completo do cartório para o valor numérico usado no <select> do site.
 CARTORIO_REGISTRO_MAP = {
@@ -106,11 +113,10 @@ def sp_cookie_accept(driver):
         except Exception as e:
             botao_cookies.click()
 
-        logging.info("Botão dentro do Shadow DOM foi clicado com sucesso!")
+        logging.info("Botão de 'aceitar cookies' foi clicado com sucesso!")
 
     except Exception as e:
-        logging.error(f"Não foi possível encontrar ou clicar no elemento dentro do Shadow DOM.")
-        logging.error(f"Erro: {e}")
+        logging.info(f"Não encontrado botão de 'aceitar cookies'")
 
 def preencher_dados_imovel(driver, dados: dict):
     logging.info("Preenchendo cadastro do imóvel para auto-completar...")
@@ -181,21 +187,17 @@ def preencher_pessoas(driver, tipo_pessoa: str, pessoas: list):
         digitos_apenas = ''.join(filter(str.isdigit, cpf_cnpj_valor))
         
         # --- LÓGICA CONDICIONAL DE PREENCHIMENTO ---
-        if len(digitos_apenas) == 14:
-            # É um CNPJ: digita lentamente, como um humano
-            logging.info(f"Detectado CNPJ. Digitanto '{cpf_cnpj_valor}' lentamente.")
+        if len(digitos_apenas) == 14 or len(digitos_apenas) == 11:
+            # É um CPF/CNPJ: digita lentamente, como um humano
+            logging.info(f"Detectado CPF/CNPJ. Digitanto '{cpf_cnpj_valor}' lentamente.")
             for caractere in cpf_cnpj_valor:
                 campo_cpf_cnpj.send_keys(caractere)
-                # Pausa aleatória entre 50 e 150 milissegundos
+                # Pausa aleatória entre 10 e 60 milissegundos
                 time.sleep(random.uniform(0.05, 0.15))
-        else:
-            # É um CPF ou outro: usa o preenchimento rápido padrão
-            logging.info(f"Detectado CPF. Preenchendo '{cpf_cnpj_valor}' rapidamente.")
-            campo_cpf_cnpj.send_keys(cpf_cnpj_valor)
-        
-        # Pressiona TAB para acionar o preenchimento automático do nome
-        campo_cpf_cnpj.send_keys(Keys.TAB)
-        time.sleep(1.5) # Pausa para a requisição do nome ser concluída
+            # Pressiona TAB para acionar o preenchimento automático do nome
+            campo_cpf_cnpj.send_keys(Keys.TAB)
+
+        #time.sleep(1) # Pausa para a requisição do nome ser concluída
 
         # Verifica se o nome foi preenchido automaticamente
         nome_xpath = f'//*[@id="fdsComprador"]/div[1]/div[2]/div/div/input' if tipo_pessoa == "comprador" else f'//*[@id="fdsVendedor"]/div[1]/div[2]/div/div/input'
@@ -218,10 +220,6 @@ def preencher_pessoas(driver, tipo_pessoa: str, pessoas: list):
             logging.error(f"O campo de nome para {tipo_pessoa} {i+1} não foi encontrado.")
             raise
 
-
-# Arquivo: bots/sao_paulo.py
-
-# (Mantenha todos os seus imports e o resto do código como está)
 
 def preencher_dados_transacao(driver, dados: dict):
     
@@ -308,8 +306,11 @@ def preencher_dados_transacao(driver, dados: dict):
 
 
             # Passo 3: Lidar com o popup de aviso
-            sp_close_aviso_financiamento(driver)
-
+            pop_up_bool = sp_close_aviso_financiamento(FORMULARIO_LOCATORS["botao_aviso_financiamento"],driver)
+            if pop_up_bool:
+                logging.info("Popup de aviso de financiamento fechado com sucesso.")
+            else:
+                logging.warning("Popup de aviso de financiamento não foi encontrado, e seguimos com automação.")
 
             # Passo 4: Esperar o campo 'Valor Financiado' se tornar visível
             logging.info("Aguardando o campo 'Valor Financiado' se tornar visível...")
@@ -448,7 +449,6 @@ def preencher_dados_transacao(driver, dados: dict):
         
         logging.info(f"Script Vue para tipo de instrumento executado: {resultado.get('message')}")
 
-        # --- LÓGICA CORRIGIDA ---
         # Aguardar e preencher os campos que aparecem
         wait = WebDriverWait(driver, 10)
         logging.info("Aguardando campos de data e cartório se tornarem visíveis...")
@@ -511,37 +511,49 @@ def preencher_dados_transacao(driver, dados: dict):
     u.fill_input(FORMULARIO_LOCATORS["transacao_matricula"], dados.get("matricula"), driver)
 
     # Clica para avançar
-    driver.find_elements(By.XPATH, FORMULARIO_LOCATORS['botao_avancar'])[0].click()
-    
-    # Fecha pop-aviso isenção financiamento, se aberto
+    u.scroll_to_element(FORMULARIO_LOCATORS["botao_avancar"], driver).click()
 
-    sp_close_aviso_financiamento(driver)
+    #  Clicando para calcular imposto na próxima página
+    u.wait_for_page_load(driver)
+    u.scroll_to_element(FORMULARIO_LOCATORS["botao_calcular_imposto"], driver).click()
+    logging.info("Dados da transação preenchidos e avançado para a próxima etapa.")
 
-def sp_close_aviso_financiamento(driver):
+    time.sleep(1000) #TODO: REMOVER ESSA PAUSA
+
+    # Emitindo guia de tributos:
+    u.scroll_to_element(FORMULARIO_LOCATORS['botao_emitir_guia_tributos'], driver).click()
+
+
+def sp_close_aviso_financiamento(button_xpath,driver):
     """
     Aguarda e fecha o popup de "Informação Sobre Financiamento" se ele aparecer.
     """
+    
     try:
-        # Espera o botão "OK" do popup ficar clicável por até 5 segundos.
+        # Espera o botão para fechamento do popup ficar clicável por até 5 segundos.
         # O seletor é baseado na classe do botão de confirmação do SweetAlert.
-        ok_button_xpath = FORMULARIO_LOCATORS["botao_aviso_financiamento"]
         
         wait = WebDriverWait(driver, 5)
-        botao_ok = wait.until(EC.element_to_be_clickable((By.XPATH, ok_button_xpath)))
+        botao_ok = wait.until(EC.element_to_be_clickable((By.XPATH, button_xpath)))
         
         logging.info("Popup de aviso de financiamento encontrado. Clicando em 'OK'.")
         botao_ok.click()
         
         # Aguarda o popup desaparecer para garantir que a ação foi concluída
-        wait.until(EC.invisibility_of_element_located((By.XPATH, ok_button_xpath)))
+        wait.until(EC.invisibility_of_element_located((By.XPATH, button_xpath)))
         logging.info("Popup de aviso fechado com sucesso.")
 
+        return True
+    
     except TimeoutException:
-        # Se o popup não aparecer em 5 segundos, apenas informa e continua.
-        logging.info("Nenhum popup de aviso de financiamento apareceu, continuando a execução.")
+        # Se o popup não aparecer em 5 segundos, apenas continua
+        logging.info("Popup de aviso de financiamento não apareceu. Continuando sem ação.")
+        return False
+    
     except Exception as e:
         # Captura outros erros inesperados ao tentar fechar o popup.
         logging.error(f"Erro inesperado ao tentar fechar o aviso de financiamento: {e}")
+        return False
 
 
 
@@ -560,28 +572,28 @@ def sao_paulo_bot():
                 "cadastro_imovel": "07007800610" # Exemplo de cadastro real
             },
             "compradores": [
-                {"cpf_cnpj": "755.173.613-15"} # Só precisamos do CPF
+                {"cpf_cnpj": "75517361315"} # Só precisamos do CPF
             ],
             "vendedores": [
                 {"cpf_cnpj": "00360305000104"} # Só precisamos do CPF/CNPJ
             ],
             "transacao": {
-                "valor_total": "200000", # valor/preço TOTAL da transação
+                "valor_total": "1031000,00", # valor/preço TOTAL da transação
                 "financiado": True, # True para Sim, False para Não
                 "tipo_financiamento": "Sistema Financeiro de Habitação", # Opções válidas (SOMENTE): "Sistema Financeiro de Habitação" ou "Minha Casa Minha Vida" ou "Consórcio" ou "SFI, Carteira Hipotecária, etc", "NULL"
-                "valor_financiamento": "150000", # valor FINANCIADO (NÃO é o VALOR TOTAL)
-                "transmite_totalidade": False, # True para Sim, False para Não
-                "proporcao_transmitida": "50,00", # VALOR EM PORCENTAGEM
-                "tipo_instrumento": "ESCRITURA_PUBLICA", # Opções válidas (SOMENTE): "ESCRITURA_PUBLICA" ou "INSTRUMENTO_PARTICULAR"
+                "valor_financiamento": "962350,00", # valor FINANCIADO (NÃO é o VALOR TOTAL)
+                "transmite_totalidade": True, # True para Sim, False para Não
+                "proporcao_transmitida": None, # VALOR EM PORCENTAGEM ex: 50,00
+                "tipo_instrumento": "INSTRUMENTO_PARTICULAR", # Opções válidas (SOMENTE): "ESCRITURA_PUBLICA" ou "INSTRUMENTO_PARTICULAR"
 
                 # --- DADOS NECESSÁRIOS PARA OS NOVOS CAMPOS ---
                 "data_registro": "04/09/2025",
-                "cartorio_notas": "2º Tabelionato de Notas",
+                "cartorio_notas": None,
                 "uf_cartorio": "SP",
                 "municipio_cartorio": "São Paulo",
                 # ----------------------------------------------
-                "cartorio_registro": "1º Cartório de Registro de Imóvel",
-                "matricula": "98765"
+                "cartorio_registro": "15º Cartório de Registro de Imóvel",
+                "matricula": "177273"
             }
         }
 
@@ -601,7 +613,6 @@ def sao_paulo_bot():
 
         # transacao
         preencher_dados_transacao(driver, dados_completos_itbi["transacao"])
-        
 
         logging.info("Formulário preenchido. Pausa para verificação.")
         time.sleep(15)
