@@ -171,7 +171,7 @@ def preencher_pessoas(driver, tipo_pessoa: str, pessoas: list):
         logging.info(f"Preenchendo dados para {tipo_pessoa} {i+1}:")
         if i > 0:
             u.click_button(FORMULARIO_LOCATORS[f"{tipo_pessoa}_adicionar_btn"], driver)
-            time.sleep(1) # Pausa para o novo campo aparecer
+            time.sleep(1.5) # Pausa para o novo campo aparecer
 
         # Localiza o campo e limpa antes de preencher
         seletor_cpf_cnpj = FORMULARIO_LOCATORS[f"{tipo_pessoa}_cpf_cnpj"]
@@ -192,8 +192,8 @@ def preencher_pessoas(driver, tipo_pessoa: str, pessoas: list):
             logging.info(f"Detectado CPF/CNPJ. Digitanto '{cpf_cnpj_valor}' lentamente.")
             for caractere in cpf_cnpj_valor:
                 campo_cpf_cnpj.send_keys(caractere)
-                # Pausa aleatória entre 50 e 150 milissegundos
-                time.sleep(random.uniform(0.05, 0.15))
+                # Pausa aleatória entre 20 e 100 milissegundos
+                time.sleep(random.uniform(0.02, 0.1))
             # Pressiona TAB para acionar o preenchimento automático do nome
             campo_cpf_cnpj.send_keys(Keys.TAB)
 
@@ -509,16 +509,6 @@ def preencher_dados_transacao(driver, dados: dict):
     # Clica para avançar
     driver.find_elements(By.XPATH, FORMULARIO_LOCATORS['botao_avancar'])[0].click()
 
-    #  Clicando para calcular imposto na próxima página
-    u.wait_for_page_load(driver)
-    u.scroll_to_element(FORMULARIO_LOCATORS["botao_calcular_imposto"], driver).click()
-    logging.info("Dados da transação preenchidos e avançado para a próxima etapa.")
-
-    time.sleep(1000) #TODO: REMOVER ESSA PAUSA
-
-    # Emitindo guia de tributos:
-    u.scroll_to_element(FORMULARIO_LOCATORS['botao_emitir_guia_tributos'], driver).click()
-
 
 def sp_close_aviso_financiamento(button_xpath,driver):
     """
@@ -608,7 +598,7 @@ def sao_paulo_bot():
         preencher_dados_transacao(driver, dados_completos_itbi["transacao"])
 
         logging.info("Formulário preenchido. Pausa para verificação.")
-        time.sleep(15)
+        time.sleep(1500)
 
     except Exception as e:
         logging.error(f"Erro no bot de São Paulo: {e}")
